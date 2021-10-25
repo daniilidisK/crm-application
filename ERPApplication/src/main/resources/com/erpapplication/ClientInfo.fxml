@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="850.0" prefWidth="700.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.InvoiceInfo.ClientInfoController">
+   <children>
+      <ImageView fx:id="image" fitHeight="125.0" fitWidth="167.0" layoutX="33.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+      <Pane layoutX="37.0" layoutY="160.0" prefHeight="267.0" prefWidth="627.0" style="-fx-border-color: #d9d9d9; -fx-border-radius: 7px;">
+         <children>
+            <Label layoutX="31.0" layoutY="16.0" text="Your Details:" textFill="#0075ff">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="name" layoutX="31.0" layoutY="53.0" text="Label">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="address" layoutX="31.0" layoutY="98.0" text="Label" textFill="#838383">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="city" layoutX="31.0" layoutY="126.0" text="Label" textFill="#838383">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="165.0" text="DOY:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="193.0" text="Occupation:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="doy" layoutX="142.0" layoutY="165.0" text="Label">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="occup" layoutX="142.0" layoutY="193.0" text="Label">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Pane layoutX="314.0" layoutY="65.0" prefHeight="117.0" prefWidth="284.0" style="-fx-border-color: #d9d9d9; -fx-border-radius: 7px; -fx-background-color: #f8f8f8;">
+               <children>
+                  <Label layoutX="25.0" layoutY="30.0" prefHeight="25.0" prefWidth="122.0" text="Bank Account:" textFill="#0075ff">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="bankacc" layoutX="25.0" layoutY="60.0" prefHeight="27.0" prefWidth="255.0" text="Label">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Label layoutX="31.0" layoutY="220.0" text="VAT ID:">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="vatid" layoutX="142.0" layoutY="220.0" text="Label">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</Pane>

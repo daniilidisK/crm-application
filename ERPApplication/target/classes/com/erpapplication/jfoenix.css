@@ -1,0 +1,8 @@
+.jfx-button:focused {
+    -fx-background-color: white;
+}
+
+#notification{
+    -fx-background-color: #ffffff00;
+    -fx-background-radius: 25px;
+}

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="999.0" prefWidth="1694.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.Visualising.VisualisingController">
+   <children>
+      <LineChart fx:id="chart" createSymbols="false" layoutX="94.0" layoutY="56.0" legendSide="TOP" legendVisible="false" prefHeight="589.0" prefWidth="1468.0" stylesheets="@graph.css">
+        <xAxis>
+          <CategoryAxis label="Date" side="BOTTOM" tickLabelRotation="40.0">
+               <tickLabelFont>
+                  <Font size="15.0" />
+               </tickLabelFont>
+            </CategoryAxis>
+        </xAxis>
+        <yAxis>
+          <NumberAxis label="Amount" side="LEFT" upperBound="100">
+               <tickLabelFont>
+                  <Font size="15.0" />
+               </tickLabelFont>
+            </NumberAxis>
+        </yAxis>
+      </LineChart>
+   </children>
+</Pane>

@@ -1,0 +1,27 @@
+#pane, .root, .split-pane{
+    -fx-background-color: #353434;
+    -fx-foreground-color: #353434;
+}
+.chart-vertical-zero-line {
+    -fx-stroke: white;
+}
+.chart-horizontal-zero-line {
+    -fx-stroke: white;
+}
+.chart-plot-background {
+    -fx-background-color: #575758;
+}
+.chart-vertical-grid-lines {
+    -fx-stroke: #898887;
+}
+.chart-horizontal-grid-lines {
+    -fx-stroke: #898887;
+}
+.axis {
+    -fx-stroke: black;
+    -fx-fill: black;
+    -fx-tick-label-fill: black;
+}
+.label{
+    -fx-font-size: 16px;
+}
