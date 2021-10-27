@@ -18,24 +18,27 @@ package com.erpapplication.Dashboard;
 
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.Calendar.Style;
+import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
 import com.calendarfx.model.Entry;
-import com.calendarfx.model.Interval;
 import com.calendarfx.view.CalendarView;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import org.bson.Document;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.ZoneId;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class CalendarApp extends Application {
+    private final ObservableList<CalStructure> list = FXCollections.observableArrayList();
+
     @Override
     public void start(Stage primaryStage) {
         CalendarView calendarView = new CalendarView();
@@ -52,30 +55,48 @@ public class CalendarApp extends Application {
         paymentDates.setStyle(Style.STYLE3);
         events.setStyle(Style.STYLE5);
 
-        CalendarSource familyCalendarSource = new CalendarSource("Family");
-        familyCalendarSource.getCalendars().addAll(invDates, paymentDates, events);
+        CalendarSource CalendarSource = new CalendarSource("Family");
+        CalendarSource.getCalendars().addAll(invDates, paymentDates, events);
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 
         InitializeDB.newDatabaseConnection("Calendar","Calendar");
-        Entry<String> dentistAppointment = new Entry<>("Dentist");
-        dentistAppointment.setInterval(new Interval(
-                LocalDate.of(2021, Month.OCTOBER, 21),
-                LocalTime.of(13, 22, 12),
-                LocalDate.of(2021, Month.OCTOBER, 21),
-                LocalTime.of(15, 42, 42)));
-        dentistAppointment.setLocation("sxolh");
-        dentistAppointment.setZoneId(ZoneId.of("Europe/Athens"));
-        invDates.addEntry(dentistAppointment);
+        String timezone;
+        for (Document doc : InitializeDB.collection.find()) {
+            timezone = doc.getString("Zoneid");
+            list.add(new CalStructure(
+                    doc.getString("Name"),
+                    doc.getBoolean("isFullday"),
+                    doc.getString("Calendar"),
+                    doc.getDate("StartDate").toInstant().atZone(ZoneId.of(timezone)).toLocalDate(),
+                    doc.getDate("endDate").toInstant().atZone(ZoneId.of(timezone)).toLocalDate(),
+                    LocalTime.parse(doc.getString("startTime"), dtf),
+                    LocalTime.parse(doc.getString("endTime"), dtf),
+                    doc.getString("Location"),
+                    ZoneId.of(timezone)));
+        }
 
-//        System.out.println(dentistAppointment.getTitle()+"\n"+
-//                dentistAppointment.getCalendar().getName()+"\n"+
-//                dentistAppointment.getLocation() +"\n"+
-//                dentistAppointment.getStartDate()+"\n"+
-//                dentistAppointment.getEndDate() +"\n"+
-//                dentistAppointment.getStartTime()+"\n"+
-//                dentistAppointment.getEndTime() + "\n" +
-//                dentistAppointment.getZoneId());
+        Entry<String> eventEntry;
+        for (CalStructure list : list) {
+            eventEntry = new Entry<>(list.getEventName());
 
-        calendarView.getCalendarSources().setAll(familyCalendarSource);
+            if (list.getCalendar().equals(invDates.getName()))
+                eventEntry.setCalendar(invDates);
+            else if (list.getCalendar().equals(paymentDates.getName()))
+                eventEntry.setCalendar(paymentDates);
+            else eventEntry.setCalendar(events);
+
+            eventEntry.setInterval(list.getStartDate(),
+                    list.getStartTime(),
+                    list.getEndDate(),
+                    list.getEndTime(),
+                    list.getZoneid());
+            eventEntry.setFullDay(list.getFullDay());
+            eventEntry.setLocation(list.getLocation());
+            //eventEntry.setRecurrenceRule("RRULE:FREQ=WEEKLY");
+        }
+
+        calendarView.getCalendarSources().setAll(CalendarSource);
         calendarView.setRequestedTime(LocalTime.now());
 
         StackPane stackPane = new StackPane();
@@ -91,7 +112,7 @@ public class CalendarApp extends Application {
                     });
 
                     try {
-                        sleep(40000); // update every 40 seconds
+                        sleep(1000); // update every 40 seconds
                     } catch (InterruptedException e) {
                         Alert a = new Alert(Alert.AlertType.ERROR);
                         a.setTitle("Error");
@@ -117,5 +138,45 @@ public class CalendarApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public record CalStructure(String eventName, boolean isFullDay, String calendar, LocalDate startDate, LocalDate endDate,
+                               LocalTime startTime, LocalTime endTime, String location, ZoneId zoneid) {
+
+        public String getEventName() {
+            return eventName;
+        }
+
+        public boolean getFullDay() {
+            return isFullDay;
+        }
+
+        public String getCalendar() {
+            return calendar;
+        }
+
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
+        }
+
+        public LocalTime getStartTime() {
+            return startTime;
+        }
+
+        public LocalTime getEndTime() {
+            return endTime;
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public ZoneId getZoneid() {
+            return zoneid;
+        }
     }
 }

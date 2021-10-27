@@ -26,7 +26,6 @@ import org.controlsfx.glyphfont.Glyph;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class InvoiceHistoryController implements Initializable {
