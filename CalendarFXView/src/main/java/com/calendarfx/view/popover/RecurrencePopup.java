@@ -70,8 +70,7 @@ public class RecurrencePopup extends PopupControl {
 
         private EventType<RecurrencePopupEvent> eventType;
 
-        public RecurrencePopupEventHandlerProperty(final String name,
-                                                   final EventType<RecurrencePopupEvent> eventType) {
+        public RecurrencePopupEventHandlerProperty(final String name, final EventType<RecurrencePopupEvent> eventType) {
             super(RecurrencePopup.this, name);
             this.eventType = eventType;
         }
@@ -113,15 +112,13 @@ public class RecurrencePopup extends PopupControl {
 
     public final ObjectProperty<EventHandler<RecurrencePopupEvent>> onCancelPressedProperty() {
         if (onCancelPressed == null) {
-            onCancelPressed = new RecurrencePopupEventHandlerProperty(
-                    "onCancelPressed", RecurrencePopupEvent.CANCEL_PRESSED);
+            onCancelPressed = new RecurrencePopupEventHandlerProperty("onCancelPressed", RecurrencePopupEvent.CANCEL_PRESSED);
         }
 
         return onCancelPressed;
     }
 
-    public final void setOnCancelPressed(
-            EventHandler<RecurrencePopupEvent> value) {
+    public final void setOnCancelPressed(EventHandler<RecurrencePopupEvent> value) {
         onCancelPressedProperty().set(value);
     }
 

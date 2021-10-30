@@ -423,8 +423,7 @@ public class YearMonthViewSkin extends DateControlSkin<YearMonthView>
 
         displayedYearMonth = yearMonth;
 
-        boolean currentYearMonth = getSkinnable().getYearMonth()
-                .equals(YearMonth.from(getSkinnable().getToday()));
+        boolean currentYearMonth = getSkinnable().getYearMonth().equals(YearMonth.from(getSkinnable().getToday()));
 
         monthLabel.getStyleClass().remove(CURRENT_DATE_LABEL);
         yearLabel.getStyleClass().remove(CURRENT_DATE_LABEL);

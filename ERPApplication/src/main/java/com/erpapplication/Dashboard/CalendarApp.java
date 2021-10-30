@@ -16,11 +16,8 @@
 
 package com.erpapplication.Dashboard;
 
-import com.calendarfx.model.Calendar;
+import com.calendarfx.model.*;
 import com.calendarfx.model.Calendar.Style;
-import com.calendarfx.model.CalendarEvent;
-import com.calendarfx.model.CalendarSource;
-import com.calendarfx.model.Entry;
 import com.calendarfx.view.CalendarView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -38,6 +35,7 @@ import java.time.format.DateTimeFormatter;
 
 public class CalendarApp extends Application {
     private final ObservableList<CalStructure> list = FXCollections.observableArrayList();
+    Document data;
 
     @Override
     public void start(Stage primaryStage) {
@@ -73,7 +71,8 @@ public class CalendarApp extends Application {
                     LocalTime.parse(doc.getString("startTime"), dtf),
                     LocalTime.parse(doc.getString("endTime"), dtf),
                     doc.getString("Location"),
-                    ZoneId.of(timezone)));
+                    ZoneId.of(timezone),
+                    doc.getString("RecurrenceRule")));
         }
 
         Entry<String> eventEntry;
@@ -93,8 +92,12 @@ public class CalendarApp extends Application {
                     list.getZoneid());
             eventEntry.setFullDay(list.getFullDay());
             eventEntry.setLocation(list.getLocation());
-            //eventEntry.setRecurrenceRule("RRULE:FREQ=WEEKLY");
+            eventEntry.setRecurrenceRule(list.getRecurrenceRule());
         }
+
+        invDates.addEventHandler(CalendarEvent.ENTRY_CALENDAR_CHANGED, this::Entry2DB);
+        paymentDates.addEventHandler(CalendarEvent.ENTRY_CALENDAR_CHANGED, this::Entry2DB);
+        events.addEventHandler(CalendarEvent.ENTRY_CALENDAR_CHANGED, this::Entry2DB);
 
         calendarView.getCalendarSources().setAll(CalendarSource);
         calendarView.setRequestedTime(LocalTime.now());
@@ -141,7 +144,7 @@ public class CalendarApp extends Application {
     }
 
     public record CalStructure(String eventName, boolean isFullDay, String calendar, LocalDate startDate, LocalDate endDate,
-                               LocalTime startTime, LocalTime endTime, String location, ZoneId zoneid) {
+                               LocalTime startTime, LocalTime endTime, String location, ZoneId zoneid, String RecurrenceRule) {
 
         public String getEventName() {
             return eventName;
@@ -178,5 +181,26 @@ public class CalendarApp extends Application {
         public ZoneId getZoneid() {
             return zoneid;
         }
+
+        public String getRecurrenceRule() {
+            return RecurrenceRule;
+        }
+    }
+
+    public void Entry2DB(CalendarEvent entry) {
+        data = new Document();
+        data.append("Calendar", entry.getEntry().getCalendar().getName())
+                .append("Location", entry.getEntry().getLocation())
+                .append("Name", entry.getEntry().getTitle())
+                .append("RecurrenceRule", entry.getEntry().getRecurrenceRule())
+                .append("StartDate", entry.getEntry().getStartDate())
+                .append("Zoneid", entry.getEntry().getZoneId().toString())
+                .append("endDate", entry.getEntry().getEndDate())
+                .append("endTime", entry.getEntry().getEndTime())
+                .append("isFullday", entry.getEntry().isFullDay())
+                .append("startTime", entry.getEntry().getStartTime());
+
+        InitializeDB.collection.insertOne(data);
+        data.clear();
     }
 }

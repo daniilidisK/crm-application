@@ -25,10 +25,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventDispatchChain;
-import javafx.event.EventHandler;
-import javafx.event.EventTarget;
+import javafx.event.*;
 import net.fortuna.ical4j.model.Recur;
 
 import java.time.Duration;
@@ -824,6 +821,15 @@ public class Calendar implements EventTarget {
      * @param l the event handler to add
      */
     public final void addEventHandler(EventHandler<CalendarEvent> l) {
+        if (l != null) {
+            if (MODEL.isLoggable(FINER)) {
+                MODEL.finer(getName() + ": adding event handler: " + l);
+            }
+            eventHandlers.add(l);
+        }
+    }
+
+    public final void addEventHandler(EventType<CalendarEvent> entryCalendarChanged, EventHandler<CalendarEvent> l) {
         if (l != null) {
             if (MODEL.isLoggable(FINER)) {
                 MODEL.finer(getName() + ": adding event handler: " + l);

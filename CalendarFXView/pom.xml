@@ -71,6 +71,13 @@
             <artifactId>javafx-controls</artifactId>
             <version>17.0.1</version>
         </dependency>
+        
+        <!--        Test-->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.12.10</version>
+        </dependency>
     </dependencies>
 
     <build>
