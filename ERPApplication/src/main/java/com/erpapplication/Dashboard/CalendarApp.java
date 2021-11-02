@@ -188,6 +188,8 @@ public class CalendarApp extends Application {
     }
 
     public void Entry2DB(CalendarEvent entry) {
+        DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
         data = new Document();
         data.append("Calendar", entry.getEntry().getCalendar().getName())
                 .append("Location", entry.getEntry().getLocation())
@@ -196,9 +198,9 @@ public class CalendarApp extends Application {
                 .append("StartDate", entry.getEntry().getStartDate())
                 .append("Zoneid", entry.getEntry().getZoneId().toString())
                 .append("endDate", entry.getEntry().getEndDate())
-                .append("endTime", entry.getEntry().getEndTime())
+                .append("endTime", entry.getEntry().getEndTime().format(timeColonFormatter))
                 .append("isFullday", entry.getEntry().isFullDay())
-                .append("startTime", entry.getEntry().getStartTime());
+                .append("startTime", entry.getEntry().getStartTime().format(timeColonFormatter));
 
         InitializeDB.collection.insertOne(data);
         data.clear();
