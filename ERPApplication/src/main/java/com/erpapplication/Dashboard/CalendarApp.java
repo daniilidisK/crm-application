@@ -36,6 +36,8 @@ import java.time.format.DateTimeFormatter;
 public class CalendarApp extends Application {
     private final ObservableList<CalStructure> list = FXCollections.observableArrayList();
     Document data;
+    DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    Document updatedData;
 
     @Override
     public void start(Stage primaryStage) {
@@ -95,9 +97,9 @@ public class CalendarApp extends Application {
             eventEntry.setRecurrenceRule(list.getRecurrenceRule());
         }
 
-        invDates.addEventHandler(CalendarEvent.ENTRY_CALENDAR_CHANGED, this::Entry2DB);
-        paymentDates.addEventHandler(CalendarEvent.ENTRY_CALENDAR_CHANGED, this::Entry2DB);
-        events.addEventHandler(CalendarEvent.ENTRY_CALENDAR_CHANGED, this::Entry2DB);
+        handleCalendar(invDates);
+        handleCalendar(paymentDates);
+        handleCalendar(events);
 
         calendarView.getCalendarSources().setAll(CalendarSource);
         calendarView.setRequestedTime(LocalTime.now());
@@ -137,6 +139,26 @@ public class CalendarApp extends Application {
         primaryStage.setMaximized(true);
         primaryStage.getIcons().addAll(new Image("com/erpapplication/dm_LOGO1.jpg"));
         primaryStage.show();
+    }
+
+    private void handleCalendar(Calendar events) {
+        events.addEventHandler(CalendarEvent.ANY, evt -> {
+            if (evt.getEventType().equals(CalendarEvent.ENTRY_CALENDAR_CHANGED)){
+                if (evt.isEntryAdded()) Entry2DB(evt);
+                else if (evt.isEntryRemoved()) RemoveFromDB(evt);
+                else UpdateCalendar(evt);
+            }
+            if (evt.getEventType().equals(CalendarEvent.ENTRY_INTERVAL_CHANGED))
+                UpdateInterval(evt);
+            if (evt.getEventType().equals(CalendarEvent.ENTRY_TITLE_CHANGED))
+                UpdateTitle(evt);
+            if (evt.getEventType().equals(CalendarEvent.ENTRY_LOCATION_CHANGED))
+                UpdateLocation(evt);
+            if (evt.getEventType().equals(CalendarEvent.ENTRY_FULL_DAY_CHANGED))
+                UpdateFullDay(evt);
+            if (evt.getEventType().equals(CalendarEvent.ENTRY_RECURRENCE_RULE_CHANGED))
+                UpdateRecurrence(evt);
+        });
     }
 
     public static void main(String[] args) {
@@ -188,8 +210,6 @@ public class CalendarApp extends Application {
     }
 
     public void Entry2DB(CalendarEvent entry) {
-        DateTimeFormatter timeColonFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-
         data = new Document();
         data.append("Calendar", entry.getEntry().getCalendar().getName())
                 .append("Location", entry.getEntry().getLocation())
@@ -204,5 +224,136 @@ public class CalendarApp extends Application {
 
         InitializeDB.collection.insertOne(data);
         data.clear();
+    }
+
+    public void RemoveFromDB(CalendarEvent entry) {
+        Document data = new Document();
+        data.append("Calendar", entry.getOldCalendar().getName())
+                .append("Location", entry.getEntry().getLocation())
+                .append("Name", entry.getEntry().getTitle())
+                .append("RecurrenceRule", entry.getEntry().getRecurrenceRule())
+                .append("StartDate", entry.getEntry().getStartDate())
+                .append("Zoneid", entry.getEntry().getZoneId().toString())
+                .append("endDate", entry.getEntry().getEndDate())
+                .append("endTime", entry.getEntry().getEndTime().format(timeColonFormatter))
+                .append("isFullday", entry.getEntry().isFullDay())
+                .append("startTime", entry.getEntry().getStartTime().format(timeColonFormatter));
+
+        InitializeDB.collection.deleteOne(data);
+        data.clear();
+    }
+
+    public void UpdateInterval(CalendarEvent entry) {
+        Document data = new Document();
+        data.append("Calendar", entry.getEntry().getCalendar().getName())
+                .append("Location", entry.getEntry().getLocation())
+                .append("Name", entry.getEntry().getTitle())
+                .append("RecurrenceRule", entry.getEntry().getRecurrenceRule())
+                .append("StartDate", entry.getOldInterval().getStartDate())
+                .append("Zoneid", entry.getOldInterval().getZoneId().toString())
+                .append("endDate", entry.getOldInterval().getEndDate())
+                .append("endTime", entry.getOldInterval().getEndTime().format(timeColonFormatter))
+                .append("isFullday", entry.getEntry().isFullDay())
+                .append("startTime", entry.getOldInterval().getStartTime().format(timeColonFormatter));
+
+        FindAndUpdate(entry, data);
+    }
+
+    public void UpdateTitle(CalendarEvent entry) {
+        Document data = new Document();
+        data.append("Calendar", entry.getEntry().getCalendar().getName())
+                .append("Location", entry.getEntry().getLocation())
+                .append("Name", entry.getOldText())
+                .append("RecurrenceRule", entry.getEntry().getRecurrenceRule())
+                .append("StartDate", entry.getEntry().getStartDate())
+                .append("Zoneid", entry.getEntry().getZoneId().toString())
+                .append("endDate", entry.getEntry().getEndDate())
+                .append("endTime", entry.getEntry().getEndTime().format(timeColonFormatter))
+                .append("isFullday", entry.getEntry().isFullDay())
+                .append("startTime", entry.getEntry().getStartTime().format(timeColonFormatter));
+
+        FindAndUpdate(entry, data);
+    }
+
+    private void FindAndUpdate(CalendarEvent entry, Document data) {
+        updatedData = new Document();
+        updatedData.append("Calendar", entry.getEntry().getCalendar().getName())
+                .append("Location", entry.getEntry().getLocation())
+                .append("Name", entry.getEntry().getTitle())
+                .append("RecurrenceRule", entry.getEntry().getRecurrenceRule())
+                .append("StartDate", entry.getEntry().getStartDate())
+                .append("Zoneid", entry.getEntry().getZoneId().toString())
+                .append("endDate", entry.getEntry().getEndDate())
+                .append("endTime", entry.getEntry().getEndTime().format(timeColonFormatter))
+                .append("isFullday", entry.getEntry().isFullDay())
+                .append("startTime", entry.getEntry().getStartTime().format(timeColonFormatter));
+
+        Document updateDoc = new Document("$set",updatedData);
+
+        InitializeDB.collection.findOneAndUpdate(data, updateDoc);
+        data.clear();
+        updatedData.clear();
+    }
+
+    public void UpdateLocation(CalendarEvent entry) {
+        Document data = new Document();
+        data.append("Calendar", entry.getEntry().getCalendar().getName())
+                .append("Name", entry.getEntry().getTitle())
+                .append("RecurrenceRule", entry.getEntry().getRecurrenceRule())
+                .append("StartDate", entry.getEntry().getStartDate())
+                .append("Zoneid", entry.getEntry().getZoneId().toString())
+                .append("endDate", entry.getEntry().getEndDate())
+                .append("endTime", entry.getEntry().getEndTime().format(timeColonFormatter))
+                .append("isFullday", entry.getEntry().isFullDay())
+                .append("startTime", entry.getEntry().getStartTime().format(timeColonFormatter));
+
+        FindAndUpdate(entry, data);
+    }
+
+    public void UpdateFullDay(CalendarEvent entry) {
+        Document data = new Document();
+        data.append("Calendar", entry.getEntry().getCalendar().getName())
+                .append("Location", entry.getEntry().getLocation())
+                .append("Name", entry.getEntry().getTitle())
+                .append("RecurrenceRule", entry.getEntry().getRecurrenceRule())
+                .append("StartDate", entry.getEntry().getStartDate())
+                .append("Zoneid", entry.getEntry().getZoneId().toString())
+                .append("endDate", entry.getEntry().getEndDate())
+                .append("endTime", entry.getEntry().getEndTime().format(timeColonFormatter))
+                //.append("isFullday", entry.getOldFullDay())
+                .append("startTime", entry.getEntry().getStartTime().format(timeColonFormatter));
+
+        FindAndUpdate(entry, data);
+    }
+
+    public void UpdateCalendar(CalendarEvent entry) {
+        Document data = new Document();
+        data.append("Calendar", entry.getOldCalendar().getName())
+                .append("Location", entry.getEntry().getLocation())
+                .append("Name", entry.getEntry().getTitle())
+                .append("RecurrenceRule", entry.getEntry().getRecurrenceRule())
+                .append("StartDate", entry.getEntry().getStartDate())
+                .append("Zoneid", entry.getEntry().getZoneId().toString())
+                .append("endDate", entry.getEntry().getEndDate())
+                .append("endTime", entry.getEntry().getEndTime().format(timeColonFormatter))
+                .append("isFullday", entry.getEntry().isFullDay())
+                .append("startTime", entry.getEntry().getStartTime().format(timeColonFormatter));
+
+        FindAndUpdate(entry, data);
+    }
+
+    public void UpdateRecurrence(CalendarEvent entry) {
+        Document data = new Document();
+        data.append("Calendar", entry.getEntry().getCalendar().getName())
+                .append("Location", entry.getEntry().getLocation())
+                .append("Name", entry.getEntry().getTitle())
+                .append("StartDate", entry.getEntry().getStartDate())
+                .append("Zoneid", entry.getEntry().getZoneId().toString())
+                .append("endDate", entry.getEntry().getEndDate())
+                .append("endTime", entry.getEntry().getEndTime().format(timeColonFormatter))
+                .append("isFullday", entry.getEntry().isFullDay())
+                .append("startTime", entry.getEntry().getStartTime().format(timeColonFormatter));
+
+        FindAndUpdate(entry, data);
     }
 }

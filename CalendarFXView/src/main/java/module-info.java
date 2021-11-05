@@ -7,7 +7,6 @@ module com.calendarfx.view {
     requires transitive org.kordamp.ikonli.javafx;
     requires transitive org.kordamp.ikonli.fontawesome;
     requires org.mnode.ical4j.core;
-    requires mongo.java.driver;
 
     exports com.calendarfx.model;
     exports com.calendarfx.util;

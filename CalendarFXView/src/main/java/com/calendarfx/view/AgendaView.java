@@ -320,7 +320,7 @@ public class AgendaView extends DateControl {
         private Label dateLabel;
         private GridPane gridPane;
         private BorderPane headerPane;
-        private boolean headerPaneVisible;
+        private final boolean headerPaneVisible;
 
         private final AgendaView agendaView;
 

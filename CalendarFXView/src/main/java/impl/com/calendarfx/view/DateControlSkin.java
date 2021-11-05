@@ -133,6 +133,7 @@ public abstract class DateControlSkin<C extends DateControl> extends SkinBase<C>
             if (eventType.equals(CalendarEvent.ENTRY_INTERVAL_CHANGED)) {
                 entryIntervalChanged(evt);
             } else if (eventType.equals(CalendarEvent.ENTRY_FULL_DAY_CHANGED)) {
+                CalendarEvent.oldFullDay = evt.getEntry().isFullDay();
                 entryFullDayChanged(evt);
             } else if (eventType.equals(CalendarEvent.ENTRY_RECURRENCE_RULE_CHANGED)) {
                 entryRecurrenceRuleChanged(evt);

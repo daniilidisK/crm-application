@@ -553,7 +553,7 @@ public class Entry<T> implements Comparable<Entry<?>> {
      */
     public final ReadOnlyObjectProperty<Entry<T>> recurrenceSourceProperty() {
         if (recurrenceSource == null) {
-            recurrenceSource = new ReadOnlyObjectWrapper<Entry<T>>(this, "recurrenceSource") {
+            recurrenceSource = new ReadOnlyObjectWrapper<>(this, "recurrenceSource") {
                 @Override
                 public void set(Entry<T> newEntry) {
                     super.set(newEntry);

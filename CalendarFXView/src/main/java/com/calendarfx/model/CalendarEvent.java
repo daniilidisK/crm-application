@@ -120,9 +120,9 @@ public class CalendarEvent extends Event {
 
     private Entry<?> entry;
 
-    private Calendar calendar;
+    private final Calendar calendar;
 
-    private boolean oldFullDay;
+    public static boolean oldFullDay;
 
     private String oldText;
 
@@ -232,8 +232,7 @@ public class CalendarEvent extends Event {
      * @param entry      the affected entry
      * @param oldFullDay the previous value of the full day
      */
-    public CalendarEvent(EventType<CalendarEvent> eventType, Calendar calendar,
-                         Entry<?> entry, boolean oldFullDay) {
+    public CalendarEvent(EventType<CalendarEvent> eventType, Calendar calendar, Entry<?> entry, boolean oldFullDay) {
         this(eventType, calendar, entry);
         this.oldFullDay = oldFullDay;
     }
