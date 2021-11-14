@@ -30,7 +30,6 @@ import java.util.ResourceBundle;
 
 public class InvoiceHistoryController implements Initializable {
     static Parent root;
-    final Button btn2 = new Button("");
     public static History data;
     private final ObservableList<History> list = FXCollections.observableArrayList();
 
@@ -161,6 +160,8 @@ public class InvoiceHistoryController implements Initializable {
     }
 
     private class EditCell extends TableCell<Disposer.Record, Boolean> {
+        Button btn2 = new Button("");
+
         EditCell() {
             Glyph gf = new Glyph("FontAwesome", "EDIT").size(20);
             gf.setStyle("-fx-text-fill: white");
@@ -178,6 +179,7 @@ public class InvoiceHistoryController implements Initializable {
                         loader.setLocation(getClass().getClassLoader().getResource("com/erpapplication/InvoiceInfo.fxml"));
                         root = loader.load();
 
+                        stage.initOwner(HomeDashboard.mainStage);
                         stage.setTitle("Diagnosis Multisystems ERP");
                         stage.getIcons().add(new Image("com/erpapplication/images/dm_LOGO1.jpg"));
                         stage.setResizable(false);
@@ -189,7 +191,7 @@ public class InvoiceHistoryController implements Initializable {
                         a.setHeaderText("Error Editing the invoice information");
                         a.setContentText(e.getMessage());
                         a.showAndWait();
-                    }
+                    } catch (IllegalStateException ignored) {}
                 });
 
                 row.setOnMouseClicked(event -> {
@@ -200,6 +202,7 @@ public class InvoiceHistoryController implements Initializable {
                             loader.setLocation(getClass().getClassLoader().getResource("com/erpapplication/InvoiceInfo.fxml"));
                             root = loader.load();
 
+                            stage.initOwner(HomeDashboard.mainStage);
                             stage.setTitle("Diagnosis Multisystems ERP");
                             stage.getIcons().add(new Image("com/erpapplication/images/dm_LOGO1.jpg"));
                             stage.setResizable(false);
@@ -211,7 +214,7 @@ public class InvoiceHistoryController implements Initializable {
                             a.setHeaderText("Error Editing the invoice information");
                             a.setContentText(e.getMessage());
                             a.showAndWait();
-                        }
+                        } catch (IllegalStateException ignored) {}
                     }
                 });
                 return row;

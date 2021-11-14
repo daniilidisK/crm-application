@@ -5,7 +5,6 @@ import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
-import javax.swing.*;
 import java.io.IOException;
 import java.io.FileOutputStream;
 import java.lang.String;
@@ -45,7 +44,7 @@ public class externalclass extends Component {
 
         //PDF creation
         Document document = new Document(PageSize.A4);
-        BaseFont fonty1 = BaseFont.createFont("fonts/Times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        BaseFont fonty1 = BaseFont.createFont("com/erpapplication/fonts/Times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         fonty1.setSubset(true);
 
         Font font1 = new Font(fonty1, 12.0f, Font.NORMAL, BaseColor.BLACK);
@@ -224,14 +223,18 @@ No Γ.Ε.Μ.Η.: 150620306000
                 document.add(table);
             }
         } catch (DocumentException | IOException | NoSuchElementException e) {
-            JOptionPane.showMessageDialog(null, e, "Error", JOptionPane.ERROR_MESSAGE);
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Error");
+            a.setHeaderText(e.getMessage());
+            e.printStackTrace();
+            a.showAndWait();
         } catch(NullPointerException ignored) {
         }
         document.close();
     }
 
     private static PdfPCell createCell(String content, int alignment, BaseColor color) throws IOException, DocumentException {
-        BaseFont fonty2 = BaseFont.createFont("fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        BaseFont fonty2 = BaseFont.createFont("com/erpapplication/fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         fonty2.setSubset(true);
         Font defaultfont = new Font(fonty2, 12f, Font.NORMAL, BaseColor.BLACK);
 
@@ -253,7 +256,7 @@ No Γ.Ε.Μ.Η.: 150620306000
     }
 
     private static PdfPCell FinalNoteCells(String content) throws IOException, DocumentException {
-        BaseFont fonty3 = BaseFont.createFont("fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        BaseFont fonty3 = BaseFont.createFont("com/erpapplication/fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         fonty3.setSubset(true);
         Font defaultfont = new Font(fonty3, 12f, Font.NORMAL, BaseColor.BLACK);
 
@@ -265,7 +268,7 @@ No Γ.Ε.Μ.Η.: 150620306000
     }
 
     private static PdfPCell FooterCell(String content, int alignment) throws IOException, DocumentException {
-        BaseFont fonty4 = BaseFont.createFont("fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        BaseFont fonty4 = BaseFont.createFont("com/erpapplication/fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         fonty4.setSubset(true);
         Font defaultfont = new Font(fonty4, 10.0f, Font.NORMAL, BaseColor.BLACK);
 
@@ -278,7 +281,7 @@ No Γ.Ε.Μ.Η.: 150620306000
     }
 
     private static PdfPCell PaymentCell(String content, int alignment) throws IOException, DocumentException {
-        BaseFont fonty5 = BaseFont.createFont("fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        BaseFont fonty5 = BaseFont.createFont("com/erpapplication/fonts/Arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         fonty5.setSubset(true);
         Font defaultfont = new Font(fonty5, 12.0f, Font.NORMAL, BaseColor.BLACK);
 

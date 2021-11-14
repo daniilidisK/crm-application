@@ -83,7 +83,6 @@
                     <target>17</target>
                 </configuration>
             </plugin>
-
                 <plugin>
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-maven-plugin</artifactId>

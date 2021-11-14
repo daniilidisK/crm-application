@@ -43,6 +43,7 @@
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
             <version>11.1.0</version>
+            <scope>compile</scope>
             <exclusions>
                 <exclusion>
                     <groupId>org.openjfx</groupId>

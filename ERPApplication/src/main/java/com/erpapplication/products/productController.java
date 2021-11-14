@@ -29,13 +29,15 @@ public class productController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TableColumn action = new TableColumn<>("Action");
+        action.setSortable(false);
         table.getColumns().add(action);
 
         action.setCellValueFactory((Callback<TableColumn.CellDataFeatures<Disposer.Record, Boolean>, ObservableValue<Boolean>>)
                 p -> new SimpleBooleanProperty(p.getValue() != null));
         action.setCellFactory((Callback<TableColumn<Disposer.Record, Boolean>, TableCell<Disposer.Record, Boolean>>) p -> new DeleteButton());
 
-        if (!list_items.isEmpty()) table.setItems(list_items);
+        if (!list_items.isEmpty())
+            table.setItems(list_items);
     }
 
     @FXML

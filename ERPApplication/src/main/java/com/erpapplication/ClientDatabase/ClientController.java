@@ -26,12 +26,10 @@ import org.controlsfx.glyphfont.Glyph;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ClientController implements Initializable {
     private Parent root;
-    final Button edit_btn = new Button("");
     public static Client client_data;
     private final ObservableList<Client> list = FXCollections.observableArrayList();
     @FXML
@@ -153,6 +151,8 @@ public class ClientController implements Initializable {
     }
 
     private class EditCell extends TableCell<Disposer.Record, Boolean> {
+        final Button edit_btn = new Button("");
+
         EditCell() {
             Glyph gf = new Glyph("FontAwesome", "EDIT").size(20);
             gf.setStyle("-fx-text-fill: white");
@@ -170,6 +170,7 @@ public class ClientController implements Initializable {
                         loader.setLocation(getClass().getClassLoader().getResource("com/erpapplication/ClientInfo.fxml"));
                         root = loader.load();
 
+                        stage.initOwner(HomeDashboard.mainStage);
                         stage.setTitle("Diagnosis Multisystems ERP");
                         stage.getIcons().add(new Image("com/erpapplication/images/dm_LOGO1.jpg"));
                         stage.setResizable(false);
@@ -181,7 +182,7 @@ public class ClientController implements Initializable {
                         a.setHeaderText("Error Editing the invoice information");
                         a.setContentText(e.getMessage());
                         a.showAndWait();
-                    }
+                    } catch (IllegalStateException ignored) {}
                 });
 
                 client_row.setOnMouseClicked(event -> {
@@ -192,6 +193,7 @@ public class ClientController implements Initializable {
                             loader.setLocation(getClass().getClassLoader().getResource("com/erpapplication/ClientInfo.fxml"));
                             root = loader.load();
 
+                            stage.initOwner(HomeDashboard.mainStage);
                             stage.setTitle("Diagnosis Multisystems ERP");
                             stage.getIcons().add(new Image("com/erpapplication/images/dm_LOGO1.jpg"));
                             stage.setResizable(false);
@@ -204,7 +206,7 @@ public class ClientController implements Initializable {
                             a.setContentText(e.getMessage());
                             e.printStackTrace();
                             a.showAndWait();
-                        }
+                        } catch (IllegalStateException ignored) {}
                     }
                 });
                 return client_row;

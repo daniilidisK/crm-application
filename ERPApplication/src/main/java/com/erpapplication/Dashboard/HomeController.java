@@ -245,7 +245,7 @@ public class HomeController implements Initializable {
     @FXML
     private void aadeUpload() throws Exception {
         previewInvoice();
-        SendInvs.main();
+        SendInvs.main(null);
     }
 
     @FXML
