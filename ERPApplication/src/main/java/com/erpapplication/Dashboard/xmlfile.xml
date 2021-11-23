@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<documentObject
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.aade.gr/myDATA/invoice/v1.0">
+    <invoice>
+        <issuer>
+            <vatNumber>35145435454</vatNumber>
+            <country>GR</country>
+            <branch>1</branch>
+        </issuer>
+        <counterpart>
+            <vatNumber>54646645555</vatNumber>
+            <country>GR</country>
+            <branch>1</branch>
+            <test>
+                <postalCode>63200</postalCode>
+                <city>cit</city>
+            </test>
+        </counterpart>
+        <invoiceHeader>
+            <aa>7</aa>
+            <issueDate>2021-11-23</issueDate>
+            <currency>EUR</currency>
+        </invoiceHeader>
+        <paymentMethods>
+            <paymentMethodDetails>
+                <amount>525.0</amount>
+                <paymentMethodInfo>ΜΕΤΡΗΤΑ</paymentMethodInfo>
+            </paymentMethodDetails>
+        </paymentMethods>
+        <invoiceDetails>
+            <netValue>420.0</netValue>
+            <vatAmount>105.0</vatAmount>
+        </invoiceDetails>
+        <invoiceSummary>
+            <totalNetValue>420.0</totalNetValue>
+            <totalVatAmount>105.0</totalVatAmount>
+            <totalGrossValue>525.0</totalGrossValue>
+        </invoiceSummary>
+    </invoice>
+</documentObject>

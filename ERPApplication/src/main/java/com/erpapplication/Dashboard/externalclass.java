@@ -19,19 +19,21 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.erpapplication.products.TableData;
 import com.erpapplication.products.productController;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 
 public class externalclass extends Component {
     static double clearAmount;
+    public static ObservableList<Invoice> invoice_items = FXCollections.observableArrayList();
 
     public externalclass(int InvNo,
                          LocalDate Date,
                          String Client,
                          String Address,
                          String City,
-                         String tax_office,
+                         String Doy,
                          String Occupation,
                          double VatNo,
                          String VAT_ID,
@@ -39,7 +41,7 @@ public class externalclass extends Component {
 
         ArrayList<Invoice> payables = new ArrayList<>();
 
-        payables.add(new Invoice(InvNo, Client, Address, City, tax_office, Occupation, VatNo, VAT_ID, Payment));
+        payables.add(new Invoice(InvNo, Date, Client, Address, City, Doy, Occupation, VatNo, VAT_ID, Payment));
         Iterator<Invoice> iterator = payables.iterator();
 
         //PDF creation
@@ -221,6 +223,10 @@ No Γ.Ε.Μ.Η.: 150620306000
 
                 // Document Addition and Close
                 document.add(table);
+
+                invoice_items.clear();
+                invoice_items.add(new Invoice(InvNo, Date, Client, Address, City, Doy, Occupation, VatNo, VAT_ID, Payment, clearAmount));
+                CreateXMLFiles.main(null);
             }
         } catch (DocumentException | IOException | NoSuchElementException e) {
             Alert a = new Alert(Alert.AlertType.ERROR);

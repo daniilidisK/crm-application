@@ -1,7 +1,8 @@
 package com.erpapplication.Dashboard;
 
+import java.time.LocalDate;
+
 public class Invoice {
-    protected int invoiceNumber;
     protected final String Client;
     protected final String Address;
     protected final String City;
@@ -10,10 +11,14 @@ public class Invoice {
     protected final double VAT_Number;
     protected final String VAT_ID;
     protected final String Payment;
+    protected double clearAmount;
+    protected int invoiceNumber;
+    protected LocalDate Date;
 
-    public Invoice(int invoiceNumber, String Client, String Address, String City, String DOY, String Occupation,
+    public Invoice(int invoiceNumber, LocalDate Date, String Client, String Address, String City, String DOY, String Occupation,
                    double VAT_Number, String VAT_ID, String Payment) {
         this.invoiceNumber = invoiceNumber;
+        this.Date = Date;
         this.Client = Client;
         this.Address = Address;
         this.Payment = Payment;
@@ -24,22 +29,67 @@ public class Invoice {
         this.VAT_ID = VAT_ID;
     }
 
-    public String getClient(){return Client;}
+    public Invoice(int invoiceNumber, LocalDate Date, String Client, String Address, String City, String DOY, String Occupation,
+                   double VAT_Number, String VAT_ID, String Payment, double clearAmount) {
+        this.invoiceNumber = invoiceNumber;
+        this.Date = Date;
+        this.Client = Client;
+        this.Address = Address;
+        this.Payment = Payment;
+        this.City = City;
+        this.DOY = DOY;
+        this.Occupation = Occupation;
+        this.VAT_Number = VAT_Number;
+        this.VAT_ID = VAT_ID;
+        this.clearAmount = clearAmount;
+    }
 
-    public String getAddress(){return Address;}
+    public int getInvoiceNumber() {
+        return invoiceNumber;
+    }
 
-    public String getCity(){return City;}
+    public LocalDate getDate() {
+        return Date;
+    }
 
-    public String getDOY(){return DOY;}
+    public String getPayment() {
+        return Payment;
+    }
 
-    public String getOccupation(){return Occupation;}
+    public String getClient() {
+        return Client;
+    }
 
-    public double getVAT_Number(){return VAT_Number;}
+    public String getAddress() {
+        return Address;
+    }
 
-    public String getVAT_ID(){ return VAT_ID; }
+    public String getCity() {
+        return City;
+    }
+
+    public String getDOY() {
+        return DOY;
+    }
+
+    public String getOccupation() {
+        return Occupation;
+    }
+
+    public double getVAT_Number() {
+        return VAT_Number;
+    }
+
+    public String getVAT_ID() {
+        return VAT_ID;
+    }
+
+    public double getClearAmount() {
+        return clearAmount;
+    }
 
     @Override
-    public String toString(){
+    public String toString() {
         return ("ΕΠΩΝΥΜΙΑ: " + getClient() + "\nΔΙΕΥΘΥΝΣΗ: " + getAddress() + "\nΠΟΛΗ: " +
                 getCity() + "\nΔ.Ο.Υ.: " + getDOY() + "\nΕΠΑΓΓΕΛΜΑ: " + getOccupation() + "\nΑ.Φ.Μ.: " + getVAT_ID());
     }

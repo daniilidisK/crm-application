@@ -27,7 +27,7 @@ public class previewInvoice extends Component {
 
         ArrayList<Invoice> payables = new ArrayList<>();
 
-        payables.add(new Invoice(InvNo, Client, Address, City, DOY, Occupation, VatNo, VAT_ID, Payment));
+        payables.add(new Invoice(InvNo, Date, Client, Address, City, DOY, Occupation, VatNo, VAT_ID, Payment));
         Iterator<Invoice> iterator = payables.iterator();
 
         //PDF creation
