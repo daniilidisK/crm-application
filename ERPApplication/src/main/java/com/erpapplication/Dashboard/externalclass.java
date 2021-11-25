@@ -226,7 +226,7 @@ No Γ.Ε.Μ.Η.: 150620306000
 
                 invoice_items.clear();
                 invoice_items.add(new Invoice(InvNo, Date, Client, Address, City, Doy, Occupation, VatNo, VAT_ID, Payment, clearAmount));
-                CreateXMLFiles.main(null);
+                // CreateXMLFiles.main(null);
             }
         } catch (DocumentException | IOException | NoSuchElementException e) {
             Alert a = new Alert(Alert.AlertType.ERROR);
