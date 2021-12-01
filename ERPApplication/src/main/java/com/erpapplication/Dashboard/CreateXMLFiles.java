@@ -54,7 +54,7 @@ public class CreateXMLFiles {
             Element branch1 = document.createElement("branch");
             branch1.appendChild(document.createTextNode("1"));
             counterpart.appendChild(branch1);
-            Element address = document.createElement(externalclass.invoice_items.get(0).Address);
+            Element address = document.createElement("address");
             counterpart.appendChild(address);
             Element postalCode = document.createElement("postalCode");
             postalCode.appendChild(document.createTextNode("63200"));
@@ -116,6 +116,8 @@ public class CreateXMLFiles {
             DOMSource domSource = new DOMSource(document);
             StreamResult streamResult = new StreamResult(new File(xmlFilePath));
             transformer.transform(domSource, streamResult);
+
+            System.out.println(domSource);
         } catch (ParserConfigurationException | TransformerException pce) {
             pce.printStackTrace();
         }

@@ -4,7 +4,7 @@
         xmlns="http://www.aade.gr/myDATA/invoice/v1.0">
     <invoice>
         <issuer>
-            <vatNumber>35145435454</vatNumber>
+            <vatNumber>35453435</vatNumber>
             <country>GR</country>
             <branch>1</branch>
         </issuer>
@@ -12,30 +12,30 @@
             <vatNumber>54646645555</vatNumber>
             <country>GR</country>
             <branch>1</branch>
-            <test>
+            <address>
                 <postalCode>63200</postalCode>
-                <city>cit</city>
-            </test>
+                <city>qq</city>
+            </address>
         </counterpart>
         <invoiceHeader>
-            <aa>7</aa>
-            <issueDate>2021-11-23</issueDate>
+            <aa>55</aa>
+            <issueDate>2021-12-11</issueDate>
             <currency>EUR</currency>
         </invoiceHeader>
         <paymentMethods>
             <paymentMethodDetails>
-                <amount>525.0</amount>
+                <amount>34.72</amount>
                 <paymentMethodInfo>ΜΕΤΡΗΤΑ</paymentMethodInfo>
             </paymentMethodDetails>
         </paymentMethods>
         <invoiceDetails>
-            <netValue>420.0</netValue>
-            <vatAmount>105.0</vatAmount>
+            <netValue>28.0</netValue>
+            <vatAmount>6.72</vatAmount>
         </invoiceDetails>
         <invoiceSummary>
-            <totalNetValue>420.0</totalNetValue>
-            <totalVatAmount>105.0</totalVatAmount>
-            <totalGrossValue>525.0</totalGrossValue>
+            <totalNetValue>28.0</totalNetValue>
+            <totalVatAmount>6.72</totalVatAmount>
+            <totalGrossValue>34.72</totalGrossValue>
         </invoiceSummary>
     </invoice>
 </documentObject>

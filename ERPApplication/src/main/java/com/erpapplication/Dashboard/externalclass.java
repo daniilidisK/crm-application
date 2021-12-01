@@ -297,7 +297,24 @@ No Γ.Ε.Μ.Η.: 150620306000
         cell.setBackgroundColor(BaseColor.WHITE);
         return cell;
     }
+
     public static double returnAmount(){
         return clearAmount;
+    }
+
+    public static ObservableList<Invoice> getInvoiceData(int InvNo, LocalDate Date, String Client, String Address,
+                                                         String City, String Doy,
+                                                         String Occupation, double VatNo,
+                                                         String VAT_ID, String Payment) {
+        final ObservableList<TableData> list = productController.list_items;
+        double clearAmount = 0;
+
+        for (TableData o:list)
+            clearAmount += o.getQuantity() * o.getItem_price();
+
+        invoice_items.clear();
+        invoice_items.add(new Invoice(InvNo, Date, Client, Address, City, Doy, Occupation, VatNo, VAT_ID, Payment, clearAmount));
+
+        return invoice_items;
     }
 }
