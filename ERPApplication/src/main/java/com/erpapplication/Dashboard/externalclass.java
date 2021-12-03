@@ -56,7 +56,7 @@ public class externalclass extends Component {
         try {
             // File Chooser Window - Save Invoice
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home"), "Desktop"));
             fileChooser.setInitialFileName(Date + "_ΤΠΥ_" + InvNo + ".pdf");
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
             fileChooser.setTitle("Save Invoice");

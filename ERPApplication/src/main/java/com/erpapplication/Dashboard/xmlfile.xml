@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<documentObject
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://www.aade.gr/myDATA/invoice/v1.0">
+<documentObject xmlns:ecls="https://www.aade.gr/myDATA/expensesClassificaton/v1.0" xmlns:icls="https://www.aade.gr/myDATA/incomeClassificaton/v1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.aade.gr/myDATA/invoice/v1.0/InvoicesDoc-v0.6.xsd" xmlns="http://www.aade.gr/myDATA/invoice/v1.0">
     <invoice>
         <issuer>
-            <vatNumber>35453435</vatNumber>
+            <vatNumber>062975945</vatNumber>
             <country>GR</country>
             <branch>1</branch>
         </issuer>
@@ -14,28 +12,28 @@
             <branch>1</branch>
             <address>
                 <postalCode>63200</postalCode>
-                <city>qq</city>
+                <city>ΝΕΑ ΜΟΥΔΑΝΙΑ</city>
             </address>
         </counterpart>
         <invoiceHeader>
-            <aa>55</aa>
-            <issueDate>2021-12-11</issueDate>
+            <aa>48</aa>
+            <issueDate>2021-12-03</issueDate>
             <currency>EUR</currency>
         </invoiceHeader>
         <paymentMethods>
             <paymentMethodDetails>
-                <amount>34.72</amount>
+                <amount>12.4</amount>
                 <paymentMethodInfo>ΜΕΤΡΗΤΑ</paymentMethodInfo>
             </paymentMethodDetails>
         </paymentMethods>
         <invoiceDetails>
-            <netValue>28.0</netValue>
-            <vatAmount>6.72</vatAmount>
+            <netValue>10.0</netValue>
+            <vatAmount>2.4</vatAmount>
         </invoiceDetails>
         <invoiceSummary>
-            <totalNetValue>28.0</totalNetValue>
-            <totalVatAmount>6.72</totalVatAmount>
-            <totalGrossValue>34.72</totalGrossValue>
+            <totalNetValue>10.0</totalNetValue>
+            <totalVatAmount>2.4</totalVatAmount>
+            <totalGrossValue>12.4</totalGrossValue>
         </invoiceSummary>
     </invoice>
 </documentObject>
