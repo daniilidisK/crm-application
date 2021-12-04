@@ -36,10 +36,10 @@ public class SendInvs {
 
             URI uri = builder.build();
             HttpPost request = new HttpPost(uri);
-            request.setHeader("aade-user-id", id_pass);
-            request.setHeader("Ocp-Apim-Subscription-Key", sub_key);
+            request.setHeader("aade-user-id", id_pass); //id_pass
+            request.setHeader("Ocp-Apim-Subscription-Key", sub_key);  //sub_key
 
-            StringEntity reqEntity = new StringEntity(String.valueOf(argv[0]), ContentType.create("text/xml", Consts.UTF_8));
+            StringEntity reqEntity = new StringEntity( String.valueOf(argv[0]), ContentType.create("text/xml", Consts.UTF_8));
             request.setEntity(reqEntity);
 
             HttpResponse response = httpclient.execute(request);
