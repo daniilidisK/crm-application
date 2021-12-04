@@ -61,7 +61,7 @@ public class externalclass extends Component {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
             fileChooser.setTitle("Save Invoice");
             File file = fileChooser.showSaveDialog(null);
-
+            //Show file path
             //path = file.getCanonicalPath();
             //System.out.println(file.getCanonicalPath());
 
