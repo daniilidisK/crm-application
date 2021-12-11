@@ -61,6 +61,9 @@ public class externalclass extends Component {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
             fileChooser.setTitle("Save Invoice");
             File file = fileChooser.showSaveDialog(null);
+            //Show file path
+            //path = file.getCanonicalPath();
+            //System.out.println(file.getCanonicalPath());
 
             // Output .pdf file
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
@@ -70,7 +73,7 @@ public class externalclass extends Component {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
             a.setTitle("Έκδοση Τιμολογίου");
             a.setHeaderText("Εκδόθηκε τιμολόγιο");
-            a.setContentText("Το τιμολόγιο " + InvNo + " είναι έτοιμο σε αρχείο .pdf");
+            a.setContentText("Το τιμολόγιο " + InvNo + " αποθηκεύτηκε στην τοποθεσία: " + file.getCanonicalPath());
             a.showAndWait();
 
             // Writing of the Invoice
