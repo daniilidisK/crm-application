@@ -62,8 +62,6 @@ public class HomeController implements Initializable {
     private DatePicker datePicker;
     @FXML
     private JFXButton checkVat;
-    public static final String xmlFilePath = "ERPApplication/src/main/java/com/erpapplication/Dashboard/xmlfile.xml";
-
 
     public void initialize(URL url, ResourceBundle rb) {
         checkVat.visibleProperty().bind(tf7.textProperty().greaterThan(""));
@@ -369,8 +367,6 @@ public class HomeController implements Initializable {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource domSource = new DOMSource(document);
-            StreamResult streamResult = new StreamResult(new File(xmlFilePath));
-            transformer.transform(domSource, streamResult);
 
             StreamResult result = new StreamResult(new StringWriter());
             transformer.transform(domSource, result);
@@ -382,7 +378,10 @@ public class HomeController implements Initializable {
             SendInvs.main(argv);
             inv_data.clear();
         } catch (ParserConfigurationException | TransformerException pce) {
-            pce.printStackTrace();
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Error in Connection");
+            a.setHeaderText(pce.getMessage());
+            a.showAndWait();
         }
     }
 
