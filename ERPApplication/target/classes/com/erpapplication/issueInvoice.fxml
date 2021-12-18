@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" prefHeight="579.0" prefWidth="1404.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.Dashboard.HomeController">
+<Pane fx:id="pane" prefHeight="579.0" prefWidth="1404.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.Dashboard.HomeController">
    <children>
       <GridPane hgap="10.0" layoutX="14.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" pickOnBounds="false" prefHeight="475.0" prefWidth="1380.0" style="-fx-background-color: #fff;" stylesheets="@style.css" vgap="2.0">
          <columnConstraints>

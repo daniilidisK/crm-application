@@ -58,22 +58,16 @@
     -fx-background-color: -fx-focus-color;
 }
 
-.background {
-    -fx-background-color: #674A44;
-    -fx-foreground-color: #353434;
-}
 
-.button {
+.button .button:not(.date-picker) {
     -fx-padding: 4 15 4 15;
-    -fx-border-color: #353434;
     -fx-border-width: 0;
-    -fx-background-radius: 0;
     -fx-background-color: derive(#353434, 20%);
     -fx-font-size: 13pt;
     -fx-text-fill: #ffffff;
 }
 
-.button:hover {
+.button:hover .button:hover:not(.date-picker) {
     -fx-background-color: #3a3a3a;
 }
 
@@ -98,4 +92,10 @@
 }
 .table-view .table-cell{
     -fx-font-size:16px;
+}
+
+.date-picker .arrow-button {
+    -fx-background-color: white;
+    -fx-border-width: 1px;
+    -fx-border-color: lightgrey;
 }
