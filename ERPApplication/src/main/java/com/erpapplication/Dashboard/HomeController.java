@@ -394,7 +394,7 @@ public class HomeController implements Initializable {
 
         stage.initOwner(HomeDashboard.mainStage);
         stage.setTitle("Diagnosis Multisystems ERP");
-        stage.getIcons().add(new Image("com/erpapplication/dm_LOGO1.jpg"));
+        stage.getIcons().add(new Image("com/erpapplication/images/dm_LOGO1.jpg"));
         stage.setResizable(false);
         stage.setScene(new Scene(pane));
         stage.show();
@@ -435,7 +435,7 @@ public class HomeController implements Initializable {
             a.setHeaderText("Complete the field " + text.getId());
             a.setContentText("Complete the fields and try again.");
             Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
-            stage.getIcons().add(new Image("images/closeWhite.png"));
+            stage.getIcons().add(new Image("com/erpapplication/images/closeWhite.png"));
             a.showAndWait();
 
             throw new Exception();

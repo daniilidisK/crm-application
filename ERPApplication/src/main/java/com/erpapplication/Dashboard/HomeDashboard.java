@@ -29,7 +29,7 @@ import java.util.Random;
 import java.util.prefs.Preferences;
 
 public class HomeDashboard extends Application {
-    public static final URL SPLASH_IMAGE = HomeDashboard.class.getClassLoader().getResource("com/erpapplication/dm_LOGO1.jpg");
+    public static final URL SPLASH_IMAGE = HomeDashboard.class.getClassLoader().getResource("com/erpapplication/images/dm_LOGO1.jpg");
     private static final int SPLASH_WIDTH = 480;
     private Pane splashLayout;
     private ProgressBar loadProgress;

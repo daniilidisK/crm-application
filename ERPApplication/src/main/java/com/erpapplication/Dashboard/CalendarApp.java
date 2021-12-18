@@ -137,7 +137,7 @@ public class CalendarApp extends Application {
         primaryStage.setTitle("Calendar");
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
-        primaryStage.getIcons().addAll(new Image("com/erpapplication/dm_LOGO1.jpg"));
+        primaryStage.getIcons().addAll(new Image("com/erpapplication/images/dm_LOGO1.jpg"));
         primaryStage.show();
     }
 
