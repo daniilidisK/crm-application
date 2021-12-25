@@ -178,7 +178,7 @@ public class HomeController implements Initializable {
             Document data = new Document("_id", new ObjectId());
             data.append("Invoice_Number", InvNo)
                     .append("Client", t1)
-                    .append("Date", (String.valueOf(date)))
+                    .append("Date", String.valueOf(date))
                     .append("Vat_ID", t7)
                     .append("Address", t2)
                     .append("Tax_Office", t4)
