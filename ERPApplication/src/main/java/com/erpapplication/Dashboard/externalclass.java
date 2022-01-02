@@ -46,7 +46,7 @@ public class externalclass extends Component {
 
         //PDF creation
         Document document = new Document(PageSize.A4);
-        BaseFont fonty1 = BaseFont.createFont("com/erpapplication/fonts/Times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        BaseFont fonty1 = BaseFont.createFont("com/erpapplication/fonts/times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         fonty1.setSubset(true);
 
         Font font1 = new Font(fonty1, 12.0f, Font.NORMAL, BaseColor.BLACK);
