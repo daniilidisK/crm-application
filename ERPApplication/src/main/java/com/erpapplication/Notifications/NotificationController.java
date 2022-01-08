@@ -24,7 +24,7 @@ public class NotificationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        InitializeDB.newDatabaseConnection("Notifications", "Notifications");
+        InitializeDB.changeDatabase("Notifications", "Notifications");
 
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));

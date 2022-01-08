@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Main-Class: com.erpapplication.Dashboard.HomeDashboard
+Class-Path: javafx-fxml-17.0.1-win.jar bcprov-ext-jdk15on-1.54.jar contr
+ olsfx-11.1.1.jar bcpkix-jdk15on-1.54.jar ikonli-javafx-12.2.0.jar three
+ ten-extra-1.5.0.jar javafx-controls-17.0.1.jar ikonli-fontawesome-pack-
+ 12.2.0.jar javafx-base-17.0.1-win.jar slf4j-api-1.7.25.jar commons-code
+ c-1.11.jar javafx-controls-17.0.1-win.jar javafx-graphics-17.0.1.jar ic
+ epdf-viewer-6.2.2.jar jai_core-1.1.3.jar batik-dom-1.6.jar ikonli-core-
+ 12.2.0.jar javafx-graphics-17.0.1-win.jar itextpdf-5.5.13.2.jar commons
+ -collections4-4.1.jar commons-logging-1.2.jar httpcore-4.4.13.jar contr
+ olsfx-11.1.0.jar ical4j-4.0.0-alpha2.jar batik-svggen-1.6.jar batik-awt
+ -util-1.6.jar batik-svg-dom-1.6.jar javafx-fxml-17.0.1.jar batik-util-1
+ .6.jar commons-lang3-3.8.1.jar batik-xml-1.6.jar jfoenix-9.0.10.jar htt
+ pclient-4.5.13.jar icepdf-core-6.2.2.jar javafx-base-17.0.1.jar httpmim
+ e-4.5.13.jar mongo-java-driver-3.12.10.jar bcprov-jdk15on-1.54.jar
+

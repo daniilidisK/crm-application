@@ -20,7 +20,7 @@ public class VisualisingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        InitializeDB.newDatabaseConnection("InvoiceDB", "InvoiceDB");
+        InitializeDB.changeDatabase("InvoiceDB", "InvoiceDB");
 
         ObservableList<String> date = FXCollections.observableArrayList();
         ObservableList<Double> numbers= FXCollections.observableArrayList();

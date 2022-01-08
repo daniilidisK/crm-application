@@ -14,16 +14,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="999.0" prefWidth="1964.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.Settings.settingsController">
+<Pane prefHeight="999.0" prefWidth="1964.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.Settings.settingsController">
    <children>
-      <GridPane cache="true" hgap="10.0" layoutX="57.0" layoutY="37.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="527.0" prefWidth="1108.0" style="-fx-background-color: #fff;" stylesheets="@style.css" vgap="2.0">
+      <GridPane cache="true" hgap="10.0" layoutX="57.0" layoutY="37.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="642.0" prefWidth="1108.0" style="-fx-background-color: #fff;" stylesheets="@style.css" vgap="2.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="24.0" />
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="33.0" />
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="43.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="1.7976931348623157E308" vgrow="ALWAYS" />
             <RowConstraints vgrow="ALWAYS" />
             <RowConstraints vgrow="ALWAYS" />
             <RowConstraints vgrow="ALWAYS" />
@@ -33,12 +32,16 @@
             <RowConstraints maxHeight="22.0" minHeight="21.0" prefHeight="22.0" vgrow="ALWAYS" />
             <RowConstraints maxHeight="136.0" minHeight="135.0" prefHeight="135.0" vgrow="ALWAYS" />
             <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
          </rowConstraints>
          <opaqueInsets>
             <Insets bottom="500.0" />
          </opaqueInsets>
          <children>
-            <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings" GridPane.rowIndex="1">
+            <Text fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="Settings">
                <font>
                   <Font name="Calibri Bold" size="28.0" />
                </font>
@@ -46,7 +49,7 @@
                   <Insets left="10.0" />
                </GridPane.margin>
             </Text>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="AADE User Id:" GridPane.rowIndex="4">
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="AADE User Id:" GridPane.rowIndex="3">
                <font>
                   <Font name="Calibri Light" size="18.0" />
                </font>
@@ -54,7 +57,7 @@
                   <Insets left="10.0" top="5.0" />
                </padding>
             </Label>
-            <PasswordField fx:id="id" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <PasswordField fx:id="id" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -65,7 +68,7 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="AADE Subscription Key:" GridPane.rowIndex="6">
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="AADE Subscription Key:" GridPane.rowIndex="5">
                <font>
                   <Font name="Calibri Light" size="18.0" />
                </font>
@@ -73,7 +76,7 @@
                   <Insets left="10.0" top="5.0" />
                </padding>
             </Label>
-            <PasswordField fx:id="subKey" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <PasswordField fx:id="subKey" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -84,7 +87,7 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <Button id="button" fx:id="save" defaultButton="true" mnemonicParsing="false" onAction="#getPassword" prefWidth="118.0" text="Save" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="9">
+            <Button id="button" fx:id="save" defaultButton="true" mnemonicParsing="false" onAction="#changePassword" prefWidth="118.0" text="Save" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="12">
                <font>
                   <Font size="15.0" />
                </font>
@@ -92,12 +95,16 @@
                   <Insets right="30.0" />
                </GridPane.margin>
             </Button>
-            <ImageView fx:id="img" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="8">
+            <Button fx:id="upload" defaultButton="true" mnemonicParsing="false" onAction="#changeImage" text="Upload" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <ImageView fx:id="img" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <image>
                   <Image url="@images/dm_LOGO1.jpg" />
                </image>
             </ImageView>
-            <Label layoutX="10.0" layoutY="114.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Invoice Logo:" GridPane.rowIndex="8">
+            <Label layoutX="10.0" layoutY="114.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Invoice Logo:" GridPane.rowIndex="7">
                <font>
                   <Font name="Calibri Light" size="18.0" />
                </font>
@@ -105,9 +112,40 @@
                   <Insets left="10.0" top="5.0" />
                </padding>
             </Label>
-            <Button fx:id="upload" mnemonicParsing="false" onAction="#changeImage" text="Upload" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Database Username:" GridPane.rowIndex="9">
+               <font>
+                  <Font name="Calibri Light" size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" top="5.0" />
+               </padding>
+            </Label>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Database Password:" GridPane.rowIndex="11">
+               <font>
+                  <Font name="Calibri Light" size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" top="5.0" />
+               </padding>
+            </Label>
+            <PasswordField fx:id="db_name" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="9">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="db_password" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="11">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </PasswordField>
          </children>
       </GridPane>
-      <Line endX="44.0" layoutX="167.0" layoutY="117.0" startX="-100.0" />
+      <Line endX="44.0" layoutX="167.0" layoutY="85.0" startX="-100.0" />
    </children>
 </Pane>

@@ -1,7 +1,7 @@
 package com.erpapplication.VatChecker;
 
-abstract class BaseFault<T extends Enum<T>> {
+abstract class BaseFault {
 
-    protected BaseFault(String fault, T defaultValue) {
+    protected BaseFault() {
     }
 }

@@ -33,13 +33,13 @@ import java.util.ResourceBundle;
 public class settingsController implements Initializable {
 
     @FXML
-    private PasswordField id, subKey;
+    private PasswordField id, subKey, db_name, db_password;
     @FXML
     private ImageView img;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        InitializeDB.newDatabaseConnection("AADE", "AADE");
+        InitializeDB.changeDatabase("AADE", "AADE");
 
         try (MongoCursor<Document> cur = InitializeDB.collection.find().iterator()) {
             var doc = cur.next();
@@ -49,6 +49,8 @@ public class settingsController implements Initializable {
             id.setText((String) values.get(1));
             subKey.setSkin(new VisiblePasswordFieldSkin(subKey));
             subKey.setText((String) values.get(2));
+            db_name.setSkin(new VisiblePasswordFieldSkin(db_name));
+            db_password.setSkin(new VisiblePasswordFieldSkin(db_password));
 
             InitializeDB.changeDatabase("AADE", "Settings");
 
@@ -59,7 +61,7 @@ public class settingsController implements Initializable {
     }
 
     @FXML
-    private void getPassword() {
+    private void changePassword() {
         String id_pass = id.getText();
         String sub_pass = subKey.getText();
 

@@ -82,7 +82,7 @@ public class HomeDashboard extends Application {
                     double prog = 0.25*(i+1);
                     updateMessage("Loading " + Comp + "...\t\t" + prog*100 + " %");
                     Random rand = new Random();
-                    Thread.sleep(rand.nextInt(500));
+                    Thread.sleep(rand.nextInt(400));
                 }
                 return foundComp;
             }

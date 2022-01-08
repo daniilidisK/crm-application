@@ -18,7 +18,6 @@ public final class InitializeDB {
         //mongoLogger.setLevel(Level.SEVERE);
         //mongoClient = new MongoClient("localhost", 27017);
 
-
         ConnectionString connectionString =
                 new ConnectionString("mongodb+srv://diagnosis:DiagnosisMultisystems2000!@crm.sk4lw.mongodb.net/Invoice?retryWrites=true&w=majority");
         MongoClientSettings settings = MongoClientSettings.builder()

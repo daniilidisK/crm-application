@@ -60,7 +60,7 @@ public class CalendarApp extends Application {
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-        InitializeDB.newDatabaseConnection("Calendar","Calendar");
+        InitializeDB.changeDatabase("Calendar","Calendar");
         String timezone;
         for (Document doc : InitializeDB.collection.find()) {
             timezone = doc.getString("Zoneid");

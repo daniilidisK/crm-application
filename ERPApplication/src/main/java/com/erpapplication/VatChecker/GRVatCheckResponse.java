@@ -31,9 +31,9 @@ public class GRVatCheckResponse {
         return fault;
     }
 
-    public static class Fault extends BaseFault<FaultType> {
+    public static class Fault extends BaseFault {
         Fault(String faultCode, String fault) {
-            super(fault, FaultType.OTHER);
+            super();
         }
     }
 

@@ -47,7 +47,7 @@ public class ClientController implements Initializable {
         BankAccount.setCellValueFactory(new PropertyValueFactory<>("BankAccount"));
         vatid.setCellValueFactory(new PropertyValueFactory<>("VATID"));
 
-        InitializeDB.newDatabaseConnection("Client", "ClientDB");
+        InitializeDB.changeDatabase("Client", "ClientDB");
 
         for (Document oldDoc : InitializeDB.collection.find()) {
             list.addAll(new Client(

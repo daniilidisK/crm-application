@@ -49,7 +49,7 @@ public class InvoiceHistoryController implements Initializable {
         credit.setCellValueFactory(new PropertyValueFactory<>("credit"));
         Total_Amount.setCellValueFactory(new PropertyValueFactory<>("totalAmount"));
 
-        InitializeDB.newDatabaseConnection("InvoiceDB", "InvoiceDB");
+        InitializeDB.changeDatabase("InvoiceDB", "InvoiceDB");
 
         for (Document oldDoc : InitializeDB.collection.find()) {
             list.add(new History(
