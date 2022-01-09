@@ -96,7 +96,6 @@ public class HomeDashboard extends Application {
                 a.setTitle("Error");
                 a.setHeaderText("Error initializing application");
                 a.setContentText(e.getMessage());
-                e.printStackTrace();
                 a.showAndWait();
             }});
         new Thread(friendTask).start();

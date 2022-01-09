@@ -25,7 +25,7 @@ public class UnpaidController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        InitializeDB.newDatabaseConnection("InvoiceDB", "InvoiceDB");
+        InitializeDB.changeDatabase("InvoiceDB", "InvoiceDB");
 
         Invoice_Number.setCellValueFactory(new PropertyValueFactory<>("invNo"));
         Client.setCellValueFactory(new PropertyValueFactory<>("name"));

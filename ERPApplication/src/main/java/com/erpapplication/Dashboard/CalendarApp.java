@@ -288,7 +288,7 @@ public class CalendarApp extends Application {
                 .append("isFullday", entry.getEntry().isFullDay())
                 .append("startTime", entry.getEntry().getStartTime().format(timeColonFormatter));
 
-        Document updateDoc = new Document("$set",updatedData);
+        Document updateDoc = new Document("$set", updatedData);
 
         InitializeDB.collection.findOneAndUpdate(data, updateDoc);
         data.clear();

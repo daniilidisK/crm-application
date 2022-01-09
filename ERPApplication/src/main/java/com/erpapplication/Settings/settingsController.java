@@ -8,6 +8,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.PasswordField;
@@ -52,27 +53,39 @@ public class settingsController implements Initializable {
             db_name.setSkin(new VisiblePasswordFieldSkin(db_name));
             db_password.setSkin(new VisiblePasswordFieldSkin(db_password));
 
+            db_name.setText((String) values.get(3));
+            db_password.setText((String) values.get(4));
+
             InitializeDB.changeDatabase("AADE", "Settings");
 
             String logo = "";
-            for (Document oldDoc : InitializeDB.collection.find()) logo = (oldDoc.getString("Logo"));
+            for (Document oldDoc : InitializeDB.collection.find())
+                logo = (oldDoc.getString("Logo"));
+
             if (!logo.equals("")) img.setImage(new Image(logo));
+        } catch (Exception e) {
+            Alert a = new Alert(Alert.AlertType.ERROR);
+            a.setTitle("Error");
+            a.setHeaderText("Error Reading Database");
+            a.setContentText(e.getMessage());
+            a.showAndWait();
         }
     }
 
     @FXML
     private void changePassword() {
-        String id_pass = id.getText();
-        String sub_pass = subKey.getText();
-
         InitializeDB.changeDatabase("AADE", "AADE");
 
         Document data = new Document();
-        Bson filter = new Document();
-        InitializeDB.collection.deleteMany(filter);
 
-        data.append("ID", id_pass).append("Sub_Key", sub_pass);
-        InitializeDB.collection.insertOne(data);
+        Document updatedData = new Document();
+        updatedData.append("ID", id.getText()).
+                append("Sub_Key", subKey.getText()).
+                append("DB_Name", db_name.getText()).
+                append("DB_Password", db_password.getText());
+
+        Document updateDoc = new Document("$set", updatedData);
+        InitializeDB.collection.findOneAndUpdate(data, updateDoc);
     }
 
     @FXML
