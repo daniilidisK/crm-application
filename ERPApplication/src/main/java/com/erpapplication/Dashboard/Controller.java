@@ -116,7 +116,7 @@ public class Controller extends Application implements Initializable {
     }
 
     public void changeNotification(){
-        InitializeDB.newDatabaseConnection("Notifications", "Notifications");
+        InitializeDB.changeDatabase("Notifications", "Notifications");
 
         NotificationController.list_items.clear();
         for (Document oldDoc : InitializeDB.collection.find()) {

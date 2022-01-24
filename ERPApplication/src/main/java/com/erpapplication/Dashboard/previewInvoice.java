@@ -47,7 +47,7 @@ public class previewInvoice extends Component {
 
             document.open();
 
-            InitializeDB.newDatabaseConnection("AADE", "Settings");
+            InitializeDB.changeDatabase("AADE", "Settings");
 
             String logo = "";
             for (org.bson.Document oldDoc : InitializeDB.collection.find())

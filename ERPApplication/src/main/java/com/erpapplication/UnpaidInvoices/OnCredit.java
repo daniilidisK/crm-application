@@ -27,7 +27,7 @@ public class OnCredit implements Runnable{
     public int continueCounting(){
         ObservableList<Integer> numbers = FXCollections.observableArrayList();
 
-        InitializeDB.newDatabaseConnection("Notifications", "Notifications");
+        InitializeDB.changeDatabase("Notifications", "Notifications");
 
         for (Document oldDoc : InitializeDB.collection.find()) {
             numbers.add(oldDoc.getInteger("Number"));

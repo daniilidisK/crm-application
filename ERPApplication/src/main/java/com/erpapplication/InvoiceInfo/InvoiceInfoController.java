@@ -38,7 +38,7 @@ public class InvoiceInfoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        InitializeDB.newDatabaseConnection("AADE", "Settings");
+        InitializeDB.changeDatabase("AADE", "Settings");
 
         String logo = "";
         for (Document oldDoc : InitializeDB.collection.find())

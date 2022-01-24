@@ -29,7 +29,7 @@ public class InsertClientController {
         if(!(sCity.isEmpty() && sAddress.isEmpty() && sBaccount.isEmpty() && sClient.isEmpty() && sJob.isEmpty() &&
                 sDoy.isEmpty() && sVatid.isEmpty())){
 
-            InitializeDB.newDatabaseConnection("Client", "ClientDB");
+            InitializeDB.changeDatabase("Client", "ClientDB");
 
             Document data = new Document();
             data.append("Address", sAddress)

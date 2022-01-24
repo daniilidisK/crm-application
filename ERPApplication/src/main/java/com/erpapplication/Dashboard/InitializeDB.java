@@ -12,14 +12,19 @@ public final class InitializeDB {
     public static MongoClient mongoClient;
     public static MongoDatabase database;
     public static MongoCollection<Document> collection;
+    private static boolean alreadyExecuted = false;
 
     private InitializeDB() {
-        ConnectionString connectionString =
-                new ConnectionString("mongodb+srv://diagnosis:DiagnosisMultisystems2000!@crm.sk4lw.mongodb.net/Invoice?retryWrites=true&w=majority");
-        MongoClientSettings settings = MongoClientSettings.builder()
-                .applyConnectionString(connectionString)
-                .build();
-        mongoClient = MongoClients.create(settings);
+        if (!alreadyExecuted) {
+            ConnectionString connectionString = new ConnectionString("mongodb+srv://diagnosis:DiagnosisMultisystems2000!@crm.sk4lw.mongodb.net/Invoice?retryWrites=true&w=majority");
+
+            MongoClientSettings settings = MongoClientSettings.builder()
+                    .applyConnectionString(connectionString)
+                    .build();
+            mongoClient = MongoClients.create(settings);
+            alreadyExecuted = true;
+            System.out.println(connectionString);
+        }
     }
 
     public static void newDatabaseConnection(String db, String coll) {

@@ -79,7 +79,7 @@ public class externalclass extends Component {
             // Writing of the Invoice
             document.open();
 
-            InitializeDB.newDatabaseConnection("AADE", "Settings");
+            InitializeDB.changeDatabase("AADE", "Settings");
 
             String logo = "";
             for (org.bson.Document oldDoc : InitializeDB.collection.find())

@@ -26,7 +26,7 @@ public class SendInvs {
         URIBuilder builder = new URIBuilder("https://mydata-prod-apim.azure-api.net/myDATA/SendInvoices");
 
         try {
-            InitializeDB.newDatabaseConnection("AADE", "AADE");
+            InitializeDB.changeDatabase("AADE", "AADE");
 
             MongoCursor<Document> cursor = InitializeDB.collection.find().iterator();
             Document oldDoc = cursor.next();
