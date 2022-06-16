@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.bson.Document;
@@ -22,16 +23,26 @@ import java.util.ResourceBundle;
 public class Controller extends Application implements Initializable {
 
     @FXML
-    private Pane main_pane, pane;
+    private Pane main_pane, topPane;
     @FXML
     private Circle circle;
     @FXML
     private Label nnumber;
+    @FXML
+    private VBox sidebar;
+
     int lsize;
     Stage stage = new Stage();
+    private Pane pane;
 
     public void initialize(URL url, ResourceBundle rb) {
         try {
+            topPane.getStyleClass().add("head-background");
+            topPane.getStylesheets().add("com/erpapplication/style-light.css");
+
+            sidebar.getStyleClass().add("sidebar");
+            sidebar.getStylesheets().add("com/erpapplication/jfoenix.css");
+
             issue();
             changeNotification();
         } catch (IOException e) {

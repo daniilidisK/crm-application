@@ -63,15 +63,15 @@
                            <font>
                               <Font size="16.0" />
                            </font></Label>
-                        <TextField fx:id="description" stylesheets="@style.css" GridPane.columnIndex="1">
+                        <TextField fx:id="description" stylesheets="@style-light.css" GridPane.columnIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font></TextField>
-                        <TextField fx:id="quantity" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="quantity" stylesheets="@style-light.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font size="14.0" />
                            </font></TextField>
-                        <TextField fx:id="itemprice" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <TextField fx:id="itemprice" stylesheets="@style-light.css" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font></TextField>

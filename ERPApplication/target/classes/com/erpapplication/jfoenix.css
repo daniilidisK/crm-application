@@ -1,3 +1,7 @@
+.sidebar {
+    -fx-background-color: #f0f0f0;
+}
+
 .jfx-button:focused {
     -fx-background-color: white;
 }

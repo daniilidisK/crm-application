@@ -23,7 +23,6 @@ public final class InitializeDB {
                     .build();
             mongoClient = MongoClients.create(settings);
             alreadyExecuted = true;
-            System.out.println(connectionString);
         }
     }
 

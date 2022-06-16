@@ -18,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1300.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="1080.0" prefWidth="1920.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.Dashboard.Controller">
-   <Pane maxHeight="79.0" maxWidth="1.7976931348623157E308" minHeight="79.0" prefHeight="79.0" styleClass="head-background" stylesheets="@../style.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+   <Pane maxHeight="79.0" maxWidth="1.7976931348623157E308" minHeight="79.0" prefHeight="79.0" styleClass="head-background" stylesheets="@../style-light.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
          <JFXButton id="notification" alignment="BASELINE_LEFT" buttonType="RAISED" focusTraversable="false" graphicTextGap="0.0" layoutX="1780.0" layoutY="21.0" onAction="#notification" pickOnBounds="false" prefHeight="43.0" prefWidth="60.0" ripplerFill="#ffffff00" stylesheets="@../jfoenix.css" textOverrun="CLIP">
             <font>

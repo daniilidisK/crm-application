@@ -2,16 +2,14 @@ package com.erpapplication.Settings;
 
 import com.mongodb.client.MongoCursor;
 import com.erpapplication.Dashboard.InitializeDB;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Cursor;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,6 +35,8 @@ public class settingsController implements Initializable {
     private PasswordField id, subKey, db_name, db_password;
     @FXML
     private ImageView img;
+    @FXML
+    private ChoiceBox<String> themes;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -63,6 +63,18 @@ public class settingsController implements Initializable {
                 logo = (oldDoc.getString("Logo"));
 
             if (!logo.equals("")) img.setImage(new Image(logo));
+
+            themes.setValue("Light Theme");
+            themes.getItems().add("Light Theme");
+            themes.getItems().add("Dark Theme");
+
+            themes.getSelectionModel().selectedItemProperty()
+                    .addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                        if (newValue.equals("Light Theme")) {
+                            System.out.println(newValue);
+                        }
+                    });
+
         } catch (Exception e) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Error");

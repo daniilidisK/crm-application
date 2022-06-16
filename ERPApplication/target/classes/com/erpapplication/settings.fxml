@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.image.Image?>
@@ -16,7 +17,7 @@
 
 <Pane prefHeight="999.0" prefWidth="1964.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.Settings.settingsController">
    <children>
-      <GridPane cache="true" hgap="10.0" layoutX="57.0" layoutY="37.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="642.0" prefWidth="1108.0" style="-fx-background-color: #fff;" stylesheets="@style.css" vgap="2.0">
+      <GridPane cache="true" hgap="10.0" layoutX="57.0" layoutY="37.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="639.0" prefWidth="1108.0" style="-fx-background-color: #fff;" stylesheets="@style-light.css" vgap="2.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="24.0" />
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="33.0" />
@@ -36,6 +37,7 @@
             <RowConstraints vgrow="ALWAYS" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+            <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="ALWAYS" />
          </rowConstraints>
          <opaqueInsets>
             <Insets bottom="500.0" />
@@ -57,7 +59,7 @@
                   <Insets left="10.0" top="5.0" />
                </padding>
             </Label>
-            <PasswordField fx:id="id" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <PasswordField fx:id="id" stylesheets="@style-light.css" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -76,7 +78,7 @@
                   <Insets left="10.0" top="5.0" />
                </padding>
             </Label>
-            <PasswordField fx:id="subKey" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <PasswordField fx:id="subKey" stylesheets="@style-light.css" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -128,7 +130,7 @@
                   <Insets left="10.0" top="5.0" />
                </padding>
             </Label>
-            <PasswordField fx:id="db_name" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <PasswordField fx:id="db_name" stylesheets="@style-light.css" GridPane.columnIndex="1" GridPane.rowIndex="9">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -136,7 +138,7 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
-            <PasswordField fx:id="db_password" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="11">
+            <PasswordField fx:id="db_password" stylesheets="@style-light.css" GridPane.columnIndex="1" GridPane.rowIndex="11">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -144,6 +146,15 @@
                   <Font size="14.0" />
                </font>
             </PasswordField>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Select Theme:" GridPane.rowIndex="13">
+               <font>
+                  <Font name="Calibri Light" size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="10.0" top="5.0" />
+               </padding>
+            </Label>
+            <ChoiceBox fx:id="themes" prefHeight="0.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="13" />
          </children>
       </GridPane>
       <Line endX="44.0" layoutX="167.0" layoutY="85.0" startX="-100.0" />

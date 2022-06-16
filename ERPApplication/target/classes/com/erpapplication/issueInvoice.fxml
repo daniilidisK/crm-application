@@ -15,7 +15,7 @@
 
 <Pane fx:id="pane" prefHeight="579.0" prefWidth="1404.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.Dashboard.HomeController">
    <children>
-      <GridPane hgap="10.0" layoutX="14.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" pickOnBounds="false" prefHeight="475.0" prefWidth="1380.0" style="-fx-background-color: #fff;" stylesheets="@style.css" vgap="2.0">
+      <GridPane hgap="10.0" layoutX="14.0" layoutY="43.0" maxHeight="-Infinity" maxWidth="-Infinity" pickOnBounds="false" prefHeight="475.0" prefWidth="1380.0" style="-fx-background-color: #fff;" stylesheets="@style-light.css" vgap="2.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="33.0" />
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="33.0" />
@@ -165,7 +165,7 @@
                   <Font size="14.0" />
                </font>
             </TextField>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@style.css" text="Date" GridPane.columnIndex="2" GridPane.valignment="BOTTOM">
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" stylesheets="@style-light.css" text="Date" GridPane.columnIndex="2" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="Calibri Light" size="17.0" />
                </font>
@@ -242,7 +242,7 @@
                   <Font name="Calibri Bold" size="19.0" />
                </font>
             </Label>
-            <TextField id="tf12" fx:id="tf12" alignment="CENTER" editable="false" styleClass="total-amount" stylesheets="@style.css" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="8">
+            <TextField id="tf12" fx:id="tf12" alignment="CENTER" editable="false" styleClass="total-amount" stylesheets="@style-light.css" visible="false" GridPane.columnIndex="2" GridPane.rowIndex="8">
                <GridPane.margin>
                   <Insets left="10.0" right="10.0" />
                </GridPane.margin>

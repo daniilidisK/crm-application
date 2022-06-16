@@ -24,7 +24,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <TextField fx:id="filterField" layoutX="706.0" layoutY="21.0" prefHeight="25.0" prefWidth="348.0" promptText="Invoice" stylesheets="@style.css">
+      <TextField fx:id="filterField" layoutX="706.0" layoutY="21.0" prefHeight="25.0" prefWidth="348.0" promptText="Invoice" stylesheets="@style-light.css">
          <font>
             <Font size="16.0" />
          </font>

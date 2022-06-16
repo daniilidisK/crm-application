@@ -12,7 +12,7 @@
 
 <Pane prefHeight="999.0" prefWidth="1694.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.erpapplication.InsertClient.InsertClientController">
    <children>
-      <GridPane hgap="10.0" layoutX="14.0" layoutY="57.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="432.0" prefWidth="1376.0" style="-fx-background-color: #fff;" stylesheets="@style.css" vgap="2.0">
+      <GridPane hgap="10.0" layoutX="14.0" layoutY="57.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pickOnBounds="false" prefHeight="432.0" prefWidth="1376.0" style="-fx-background-color: #fff;" stylesheets="@style-light.css" vgap="2.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="33.0" />
             <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308" percentWidth="33.0" />

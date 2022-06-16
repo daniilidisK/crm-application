@@ -39,7 +39,7 @@
                </graphic>
             </JFXButton>
             <Line endX="-100.0" endY="-51.0" layoutX="1649.0" layoutY="51.0" startX="-100.0" startY="-2.0" />
-            <TextField fx:id="filterFieldClient" layoutX="677.0" layoutY="8.0" prefHeight="25.0" prefWidth="348.0" promptText="Client" stylesheets="@style.css">
+            <TextField fx:id="filterFieldClient" layoutX="677.0" layoutY="8.0" prefHeight="25.0" prefWidth="348.0" promptText="Client" stylesheets="@style-light.css">
                <font>
                   <Font size="14.0" />
                </font>
