@@ -84,7 +84,6 @@ class CreateDeleteHandler {
                         continue;
                     }
 
-                    assert entry != null;
                     Calendar calendar = entry.getCalendar();
                     if (calendar != null && !calendar.isReadOnly()) {
                         entry.removeFromCalendar();

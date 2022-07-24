@@ -415,8 +415,12 @@ public class PrintView extends ViewTypeControl {
         if (dialog != null) {
             dialog.show();
         } else {
+            Scene ownerScene = owner.getScene();
+
             TimeRangeView timeRange = getSettingsView().getTimeRangeView();
             Scene scene = new Scene(this);
+            scene.getStylesheets().addAll(ownerScene.getStylesheets());
+
             dialog = new Stage();
             dialog.initOwner(owner);
             dialog.setScene(scene);
@@ -552,14 +556,16 @@ public class PrintView extends ViewTypeControl {
             settings.setJobName(Messages.getString("PrintView.TITLE_LABEL"));
             settings.setPageLayout(layout);
             settings.setPrintColor(PrintColor.COLOR);
-
             boolean proceed = job.showPrintDialog(dialog.getOwner().getScene().getWindow());
 
             if (proceed) {
                 do {
                     boolean success = job.printPage(pageToPrint);
-                    if (!success) break;
+                    if (!success) {
+                        break;
+                    }
                 } while (pageToPrint.next());
+
                 job.endJob();
             }
         } finally {
@@ -567,7 +573,7 @@ public class PrintView extends ViewTypeControl {
         }
     }
 
-    private static final Util.Converter<Boolean, DateControl.Layout> LAYOUT_BOOLEAN_CONVERTER = new Util.Converter<>() {
+    private static final Util.Converter<Boolean, DateControl.Layout> LAYOUT_BOOLEAN_CONVERTER = new Util.Converter<Boolean, DateControl.Layout>() {
 
         @Override
         public Boolean toLeft(DateControl.Layout right) {

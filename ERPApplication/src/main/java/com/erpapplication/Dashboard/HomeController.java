@@ -11,6 +11,7 @@ import com.erpapplication.VatChecker.GRVatChecker;
 import com.itextpdf.text.DocumentException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -392,10 +393,10 @@ public class HomeController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/products.fxml"));
         Pane pane = fxmlLoader.load();
 
-        stage.initOwner(HomeDashboard.mainStage);
         stage.setTitle("Diagnosis Multisystems ERP");
         stage.getIcons().add(new Image("com/erpapplication/images/dm_LOGO1.jpg"));
         stage.setResizable(false);
+        stage.initOwner(HomeDashboard.mainStage);
         stage.setScene(new Scene(pane));
         stage.show();
     }

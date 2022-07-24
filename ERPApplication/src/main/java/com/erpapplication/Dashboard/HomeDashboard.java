@@ -2,6 +2,7 @@ package com.erpapplication.Dashboard;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -130,6 +131,10 @@ public class HomeDashboard extends Application {
             preferences.putDouble(WINDOW_POSITION_Y, mainStage.getY());
             preferences.putDouble(WINDOW_WIDTH, mainStage.getWidth());
             preferences.putDouble(WINDOW_HEIGHT, mainStage.getHeight());
+
+            try {
+                System.exit(0);
+            } catch (Exception ignored) {}
         });
 
         mainStage.setScene(new Scene(content));

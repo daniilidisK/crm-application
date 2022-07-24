@@ -22,8 +22,6 @@ import javafx.scene.control.Control;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.control.PropertySheet.Item;
 
-import java.util.Objects;
-
 /**
  * Common superclass for all controls in the calendar framework.
  */
@@ -40,7 +38,7 @@ public abstract class CalendarFXControl extends Control {
     @Override
     public final String getUserAgentStylesheet() {
         if (stylesheet == null) {
-            stylesheet = Objects.requireNonNull(CalendarFXControl.class.getResource("calendar.css")).toExternalForm();
+            stylesheet = CalendarFXControl.class.getResource("calendar.css").toExternalForm();
         }
         return stylesheet;
     }

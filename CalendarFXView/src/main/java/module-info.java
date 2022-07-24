@@ -1,4 +1,5 @@
 module com.calendarfx.view {
+
     requires java.logging;
 
     requires transitive javafx.controls;

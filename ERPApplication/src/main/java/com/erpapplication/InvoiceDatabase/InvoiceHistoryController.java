@@ -11,6 +11,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,6 +22,7 @@ import javafx.stage.StageStyle;
 import org.bson.Document;
 import org.controlsfx.glyphfont.Glyph;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -170,7 +172,6 @@ public class InvoiceHistoryController implements Initializable {
             btn2.setStyle("-fx-font-size: 15px");
 
             Stage stage = new Stage(StageStyle.DECORATED);
-            stage.initOwner(HomeDashboard.mainStage);
             TableRow<History> client_row = new TableRow<>();
 
             historyTableView.setRowFactory(ev -> {
@@ -186,6 +187,7 @@ public class InvoiceHistoryController implements Initializable {
                             stage.getIcons().add(new Image("com/erpapplication/images/dm_LOGO1.jpg"));
                             stage.setResizable(false);
                             stage.setScene(new Scene(root));
+                            stage.initOwner(HomeDashboard.mainStage);
                             stage.showAndWait();
                         } catch (IOException e) {
                             Alert a = new Alert(Alert.AlertType.ERROR);

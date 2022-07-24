@@ -40,7 +40,7 @@ public class ResourceCalendarView<T> extends DayViewBase {
                         dayViewMap.put(resource, dayView);
                     });
                 } else if (change.wasRemoved()) {
-                    change.getRemoved().forEach(dayViewMap::remove);
+                    change.getRemoved().forEach(resource -> dayViewMap.remove(resource));
                 }
             }
         };

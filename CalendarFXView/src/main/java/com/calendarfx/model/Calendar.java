@@ -137,7 +137,7 @@ public class Calendar implements EventTarget {
         }
     }
 
-    private IntervalTree<Entry<?>> intervalTree = new IntervalTree<>();
+    private final IntervalTree<Entry<?>> intervalTree = new IntervalTree<>();
 
     /**
      * Constructs a new calendar.
@@ -812,7 +812,7 @@ public class Calendar implements EventTarget {
         readOnlyProperty().set(readOnly);
     }
 
-    private ObservableList<EventHandler<CalendarEvent>> eventHandlers = FXCollections.observableArrayList();
+    private final ObservableList<EventHandler<CalendarEvent>> eventHandlers = FXCollections.observableArrayList();
 
     /**
      * Adds an event handler for calendar events. Handlers will be called when

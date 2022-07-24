@@ -138,7 +138,8 @@ public class CalendarEvent extends Event {
      * @param eventType the event type
      * @param calendar  the calendar where the event occurred.
      */
-    protected CalendarEvent(EventType<? extends CalendarEvent> eventType, Calendar calendar) {
+    protected CalendarEvent(EventType<? extends CalendarEvent> eventType,
+                            Calendar calendar) {
         super(calendar, calendar, eventType);
 
         this.calendar = requireNonNull(calendar);
@@ -151,7 +152,8 @@ public class CalendarEvent extends Event {
      * @param calendar  the calendar where the event occured
      * @param entry     the affected entry
      */
-    public CalendarEvent(EventType<? extends CalendarEvent> eventType, Calendar calendar, Entry<?> entry) {
+    public CalendarEvent(EventType<? extends CalendarEvent> eventType,
+                         Calendar calendar, Entry<?> entry) {
         super(calendar, calendar, eventType);
 
         this.calendar = calendar;
@@ -232,7 +234,8 @@ public class CalendarEvent extends Event {
      * @param entry      the affected entry
      * @param oldFullDay the previous value of the full day
      */
-    public CalendarEvent(EventType<CalendarEvent> eventType, Calendar calendar, Entry<?> entry, boolean oldFullDay) {
+    public CalendarEvent(EventType<CalendarEvent> eventType, Calendar calendar,
+                         Entry<?> entry, boolean oldFullDay) {
         this(eventType, calendar, entry);
         this.oldFullDay = oldFullDay;
     }
@@ -354,8 +357,6 @@ public class CalendarEvent extends Event {
 
         ZonedDateTime newEnd = newInterval.getEndZonedDateTime();
         ZonedDateTime oldEnd = oldInterval.getEndZonedDateTime();
-
-        
         return !newEnd.toLocalDate().equals(oldEnd.toLocalDate());
 
     }

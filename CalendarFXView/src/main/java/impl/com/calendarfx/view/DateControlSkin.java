@@ -117,7 +117,7 @@ public abstract class DateControlSkin<C extends DateControl> extends SkinBase<C>
     private void calendarChanged(CalendarEvent evt) {
 
         if (LoggingDomain.EVENTS.isLoggable(Level.FINE) && !(evt.getEntry() instanceof DraggedEntry)) {
-            LoggingDomain.EVENTS.fine("calendar event in " + getSkinnable().getClass().getSimpleName() + ": " + evt.getEventType() + ", details: " + evt.toString());
+            LoggingDomain.EVENTS.fine("calendar event in " + getSkinnable().getClass().getSimpleName() + ": " + evt.getEventType() + ", details: " + evt);
         }
 
         if (getSkinnable().isSuspendUpdates()) {
@@ -133,7 +133,6 @@ public abstract class DateControlSkin<C extends DateControl> extends SkinBase<C>
             if (eventType.equals(CalendarEvent.ENTRY_INTERVAL_CHANGED)) {
                 entryIntervalChanged(evt);
             } else if (eventType.equals(CalendarEvent.ENTRY_FULL_DAY_CHANGED)) {
-                CalendarEvent.oldFullDay = evt.getEntry().isFullDay();
                 entryFullDayChanged(evt);
             } else if (eventType.equals(CalendarEvent.ENTRY_RECURRENCE_RULE_CHANGED)) {
                 entryRecurrenceRuleChanged(evt);

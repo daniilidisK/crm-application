@@ -553,15 +553,11 @@ public class Entry<T> implements Comparable<Entry<?>> {
      */
     public final ReadOnlyObjectProperty<Entry<T>> recurrenceSourceProperty() {
         if (recurrenceSource == null) {
-            recurrenceSource = new ReadOnlyObjectWrapper<>(this, "recurrenceSource") {
+            recurrenceSource = new ReadOnlyObjectWrapper<Entry<T>>(this, "recurrenceSource") {
                 @Override
                 public void set(Entry<T> newEntry) {
                     super.set(newEntry);
-                    if (newEntry != null) {
-                        setRecurrence(true);
-                    } else {
-                        setRecurrence(false);
-                    }
+                    setRecurrence(newEntry != null);
                 }
             };
         }
@@ -827,7 +823,7 @@ public class Entry<T> implements Comparable<Entry<?>> {
     /*
      * Calendar support.
      */
-    private SimpleObjectProperty<Calendar> calendar = new SimpleObjectProperty<Calendar>(this, "calendar") {
+    private final SimpleObjectProperty<Calendar> calendar = new SimpleObjectProperty<Calendar>(this, "calendar") {
 
         @Override
         public void set(Calendar newCalendar) {

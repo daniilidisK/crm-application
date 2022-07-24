@@ -38,7 +38,7 @@ public class productController implements Initializable {
 
     @FXML
     public void minimize(MouseEvent e) {
-        ((JFXButton)e.getSource()).getScene().getWindow().hide();
+        ((JFXButton) e.getSource()).getScene().getWindow().hide();
     }
 
     @FXML

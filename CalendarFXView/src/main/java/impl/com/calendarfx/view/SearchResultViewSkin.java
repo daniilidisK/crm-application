@@ -57,14 +57,16 @@ public class SearchResultViewSkin extends SkinBase<SearchResultView> {
         getChildren().add(listView);
     }
 
-    public static class SearchResultCellFactory implements Callback<ListView<Entry<?>>, ListCell<Entry<?>>> {
+    public class SearchResultCellFactory
+            implements Callback<ListView<Entry<?>>, ListCell<Entry<?>>> {
+
         @Override
         public ListCell<Entry<?>> call(ListView<Entry<?>> param) {
             return new SearchResultListViewCell();
         }
     }
 
-    public static class SearchResultListViewCell extends ListCell<Entry<?>> {
+    public class SearchResultListViewCell extends ListCell<Entry<?>> {
 
         private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
         private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);

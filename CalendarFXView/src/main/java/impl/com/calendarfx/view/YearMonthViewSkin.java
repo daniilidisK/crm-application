@@ -16,23 +16,6 @@
 
 package impl.com.calendarfx.view;
 
-import static java.lang.Double.MAX_VALUE;
-import static java.time.format.TextStyle.SHORT;
-import static javafx.geometry.Pos.CENTER;
-import static javafx.scene.control.SelectionMode.SINGLE;
-import static javafx.scene.layout.Priority.ALWAYS;
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.Year;
-import java.time.YearMonth;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import com.calendarfx.model.Calendar;
 import com.calendarfx.model.CalendarEvent;
 import com.calendarfx.model.CalendarSource;
@@ -44,9 +27,10 @@ import com.calendarfx.view.DateControl.DateDetailsParameter;
 import com.calendarfx.view.Messages;
 import com.calendarfx.view.RequestEvent;
 import com.calendarfx.view.YearMonthView;
-
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -63,6 +47,23 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.RowConstraints;
 import javafx.util.Callback;
+
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import static java.lang.Double.MAX_VALUE;
+import static java.time.format.TextStyle.SHORT;
+import static javafx.geometry.Pos.CENTER;
+import static javafx.scene.control.SelectionMode.SINGLE;
+import static javafx.scene.layout.Priority.ALWAYS;
 
 public class YearMonthViewSkin extends DateControlSkin<YearMonthView>
         implements LoadDataSettingsProvider {
@@ -143,9 +144,14 @@ public class YearMonthViewSkin extends DateControlSkin<YearMonthView>
         view.getCalendars().addListener((Observable it) -> updateUsageColors(
                 "list of calendars changed"));
 
-        view.dateProperty().addListener((observable, oldValue, newValue) -> {
-            if (oldValue.getYear() != newValue.getYear()) {
-                updateUsageColors("Year has changed.");
+        view.dateProperty().addListener(new ChangeListener<LocalDate>() {
+
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable,
+                    LocalDate oldValue, LocalDate newValue) {
+                if (oldValue.getYear() != newValue.getYear()) {
+                    updateUsageColors("Year has changed.");
+                }
             }
         });
 
@@ -423,7 +429,8 @@ public class YearMonthViewSkin extends DateControlSkin<YearMonthView>
 
         displayedYearMonth = yearMonth;
 
-        boolean currentYearMonth = getSkinnable().getYearMonth().equals(YearMonth.from(getSkinnable().getToday()));
+        boolean currentYearMonth = getSkinnable().getYearMonth()
+                .equals(YearMonth.from(getSkinnable().getToday()));
 
         monthLabel.getStyleClass().remove(CURRENT_DATE_LABEL);
         yearLabel.getStyleClass().remove(CURRENT_DATE_LABEL);

@@ -154,7 +154,6 @@ public class AllDayViewSkin extends DateControlSkin<AllDayView> implements LoadD
         if (entry.isRecurring()) {
             Calendar calendar = entry.getCalendar();
             final Map<LocalDate, List<Entry<?>>> entries = calendar.findEntries(getLoadStartDate(), getLoadEndDate(), getZoneId());
-
             for (LocalDate date : entries.keySet()) {
                 List<Entry<?>> entriesOnDate = entries.get(date);
                 if (entriesOnDate != null) {
@@ -166,7 +165,7 @@ public class AllDayViewSkin extends DateControlSkin<AllDayView> implements LoadD
         }
     }
 
-    private void doAddEntryView(Entry<?> entry) {
+    private AllDayEntryView doAddEntryView(Entry<?> entry) {
         Callback<Entry<?>, AllDayEntryView> factory = getSkinnable().getEntryViewFactory();
         AllDayEntryView view = factory.call(entry);
         view.applyCss(); // TODO: really needed
@@ -181,6 +180,7 @@ public class AllDayViewSkin extends DateControlSkin<AllDayView> implements LoadD
             LoggingDomain.VIEW.fine("added entry view " + entry.getTitle() + ", day = " + getSkinnable().getDate());
         }
 
+        return view;
     }
 
     /*

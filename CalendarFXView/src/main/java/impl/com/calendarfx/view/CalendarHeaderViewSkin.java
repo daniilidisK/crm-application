@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 public class CalendarHeaderViewSkin extends SkinBase<CalendarHeaderView> {
 
     private final GridPane pane;
+
     private final PseudoClass FIRST_COLUMN = PseudoClass.getPseudoClass("first");
     private final PseudoClass MIDDLE_COLUMN = PseudoClass.getPseudoClass("middle");
     private final PseudoClass LAST_COLUMN = PseudoClass.getPseudoClass("last");
