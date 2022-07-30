@@ -53,8 +53,10 @@ public class settingsController implements Initializable {
             db_name.setSkin(new VisiblePasswordFieldSkin(db_name));
             db_password.setSkin(new VisiblePasswordFieldSkin(db_password));
 
-            db_name.setText((String) values.get(3));
-            db_password.setText((String) values.get(4));
+            if (values.size() > 2 + 1) {
+                db_name.setText((String) values.get(3));
+                db_password.setText((String) values.get(4));
+            }
 
             InitializeDB.changeDatabase("AADE", "Settings");
 
