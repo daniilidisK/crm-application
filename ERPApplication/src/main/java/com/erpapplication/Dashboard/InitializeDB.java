@@ -16,7 +16,7 @@ public final class InitializeDB {
     private InitializeDB() {
         if (!alreadyExecuted) {
             ConnectionString connectionString =
-                    new ConnectionString("mongodb+srv://diagnosis:1245789936ASDfg%21%40@crm.sk4lw.mongodb.net/?retryWrites=true&w=majority");
+                    new ConnectionString("mongodb+srv://<username>:<password>@crm.sk4lw.mongodb.net/?retryWrites=true&w=majority");
 
             MongoClientSettings settings = MongoClientSettings.builder()
                     .applyConnectionString(connectionString)
