@@ -44,7 +44,7 @@ public class Controller extends Application implements Initializable {
             sidebar.getStylesheets().add("com/erpapplication/jfoenix.css");
 
             issue();
-            changeNotification();
+//            changeNotification();
         } catch (IOException e) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setTitle("Error");
@@ -56,46 +56,47 @@ public class Controller extends Application implements Initializable {
 
     @FXML
     private void issue() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/issueInvoice.fxml"));
-        pane = fxmlLoader.load();
-        main_pane.getChildren().setAll(pane);
-
-        productController.list_items.clear();
+        safeFXMLLoad("com/erpapplication/issueInvoice.fxml", true);
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/issueInvoice.fxml"));
+//            pane = fxmlLoader.load();
+//            main_pane.getChildren().setAll(pane);
+//
+//            productController.list_items.clear();
+//        } catch (IOException e) {
+//            pane = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/NetIssue.fxml")).load();
+//            main_pane.getChildren().setAll(pane);
+//        }
     }
 
     @FXML
     private void invoiceHistory() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/InvoiceHistory.fxml"));
-        pane = fxmlLoader.load();
-        main_pane.getChildren().setAll(pane);
+        safeFXMLLoad("com/erpapplication/InvoiceHistory.fxml", false);
     }
 
     @FXML
-    private void unpaidinvoices() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/UnpaidInvoices.fxml"));
-        pane = fxmlLoader.load();
-        main_pane.getChildren().setAll(pane);
+    private void unpaidInvoices() throws IOException {
+        safeFXMLLoad("com/erpapplication/UnpaidInvoices.fxml", false);
     }
 
     @FXML
     private void writeClient() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/insertCL.fxml"));
-        pane = fxmlLoader.load();
-        main_pane.getChildren().setAll(pane);
+        if (InitializeDB.alreadyExecuted)
+            safeFXMLLoad("com/erpapplication/insertCL.fxml", false);
+        else {
+            pane = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/NetIssue.fxml")).load();
+            main_pane.getChildren().setAll(pane);
+        }
     }
 
     @FXML
     private void clientData() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/ClientDatabase.fxml"));
-        pane = fxmlLoader.load();
-        main_pane.getChildren().setAll(pane);
+        safeFXMLLoad("com/erpapplication/ClientDatabase.fxml", false);
     }
 
     @FXML
     private void settings() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/settings.fxml"));
-        pane = fxmlLoader.load();
-        main_pane.getChildren().setAll(pane);
+        safeFXMLLoad("com/erpapplication/settings.fxml", false);
     }
 
     @FXML
@@ -107,18 +108,30 @@ public class Controller extends Application implements Initializable {
 
     @FXML
     private void notification() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/notifications.fxml"));
-        pane = fxmlLoader.load();
-        main_pane.getChildren().setAll(pane);
-        changeNotification();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/notifications.fxml"));
+            pane = fxmlLoader.load();
+            main_pane.getChildren().setAll(pane);
+
+            changeNotification();
+        } catch (IOException e) {
+            pane = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/NetIssue.fxml")).load();
+            main_pane.getChildren().setAll(pane);
+        }
     }
 
     @FXML
     private void visualising() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/visualising.fxml"));
-        pane = fxmlLoader.load();
-        main_pane.getChildren().setAll(pane);
-        changeNotification();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/visualising.fxml"));
+            pane = fxmlLoader.load();
+            main_pane.getChildren().setAll(pane);
+
+            changeNotification();
+        } catch (IOException e) {
+            pane = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/NetIssue.fxml")).load();
+            main_pane.getChildren().setAll(pane);
+        }
     }
 
     @FXML
@@ -155,6 +168,20 @@ public class Controller extends Application implements Initializable {
             a.setHeaderText("Error Starting Calendar App");
             a.setContentText(e.getMessage());
             a.showAndWait();
+        }
+    }
+
+    private void safeFXMLLoad(String fxml, boolean clearProductList) throws IOException {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getClassLoader().getResource(fxml));
+            pane = fxmlLoader.load();
+            main_pane.getChildren().setAll(pane);
+
+            if (clearProductList)
+                productController.list_items.clear();
+        } catch (IOException e) {
+            pane = new FXMLLoader(getClass().getClassLoader().getResource("com/erpapplication/NetIssue.fxml")).load();
+            main_pane.getChildren().setAll(pane);
         }
     }
 }

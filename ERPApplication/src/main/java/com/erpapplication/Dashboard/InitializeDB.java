@@ -1,7 +1,6 @@
 package com.erpapplication.Dashboard;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.MongoClientSettings;
+import com.mongodb.*;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -12,11 +11,12 @@ public final class InitializeDB {
     public static MongoClient mongoClient;
     public static MongoDatabase database;
     public static MongoCollection<Document> collection;
-    private static boolean alreadyExecuted = false;
+    public static boolean alreadyExecuted = false;
 
     private InitializeDB() {
         if (!alreadyExecuted) {
-            ConnectionString connectionString = new ConnectionString("mongodb+srv://diagnosis:DiagnosisMultisystems2000!@crm.sk4lw.mongodb.net/Invoice?retryWrites=true&w=majority");
+            ConnectionString connectionString =
+                    new ConnectionString("mongodb+srv://diagnosis:1245789936ASDfg%21%40@crm.sk4lw.mongodb.net/?retryWrites=true&w=majority");
 
             MongoClientSettings settings = MongoClientSettings.builder()
                     .applyConnectionString(connectionString)

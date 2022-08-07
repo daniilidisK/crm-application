@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="999.0" prefWidth="1694.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fill="#5b5a5a" layoutX="719.0" layoutY="464.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cannot Load Application">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <Text fill="#808080" layoutX="746.0" layoutY="501.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Check your network or database connectivity" textAlignment="CENTER" wrappingWidth="184.642578125">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="764.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/network.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
