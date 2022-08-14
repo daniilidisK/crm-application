@@ -112,7 +112,7 @@
             <Insets left="50.0" />
          </padding>
       </JFXButton>
-      <JFXButton alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="163.0" onAction="#unpaidinvoices" prefHeight="43.0" prefWidth="247.0" ripplerFill="#4876ff" style="-fx-background-radius: 0;" text="Unpaid invoices" textFill="#5b5858">
+      <JFXButton alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="163.0" onAction="#unpaidInvoices" prefHeight="43.0" prefWidth="247.0" ripplerFill="#4876ff" style="-fx-background-radius: 0;" text="Unpaid invoices" textFill="#5b5858">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
