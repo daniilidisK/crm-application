@@ -2,7 +2,6 @@ package com.erpapplication.Dashboard;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.prefs.Preferences;
 import java.security.Key;
@@ -13,7 +12,7 @@ public class EncryptCredentials {
     Preferences preferences = Preferences.userNodeForPackage(this.getClass());
 
     private static final File CREDENTIALS_DIRECTORY = new File(System.getProperty("user.home"), ".store/crm");
-    private static final String key = "Bar12345Bar12345";   // 128-bit key
+    private static final byte[] bFile = new byte[(int) CREDENTIALS_DIRECTORY.length()];
 
     public void setCredentials(String username, String password) {
         preferences.put("db_username", username);
@@ -28,30 +27,25 @@ public class EncryptCredentials {
         return preferences.get("db_password", null);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main() throws IOException {
         EncryptCredentials g = new EncryptCredentials();
-        g.setCredentials("username", "password");
+        g.setCredentials("diagnosis", "MVHONfIcGgqjulBP");
 
-        byte[] enc = encrypt(key,g.getUsername() + "\n" + g.getPassword());
-        System.out.println(new String(enc));
+//        byte[] enc = encrypt(key,g.getUsername() + "\n" + g.getPassword());
+//
+//        try (FileOutputStream outputStream = new FileOutputStream(CREDENTIALS_DIRECTORY)) {
+//            outputStream.write(enc);
+//        }
 
-        try (FileOutputStream outputStream = new FileOutputStream(CREDENTIALS_DIRECTORY)) {
-            outputStream.write(enc);
-        }
+//        byte[] dec = decrypt(key, bFile);
+//        System.out.println(new String(dec));
+//
+//        byte[] ret = returnCredentials();
+//        System.out.println(new String(ret));
+    }
 
-        byte[] bFile = new byte[(int) CREDENTIALS_DIRECTORY.length()];
-
-        try {
-            FileInputStream fileInputStream = new FileInputStream(CREDENTIALS_DIRECTORY);
-            fileInputStream.read(bFile);
-            fileInputStream.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        byte[] dec = decrypt(key, bFile);
-        System.out.println(new String(dec));
+    public static byte[] returnCredentials(String key){
+        return decrypt(key, bFile, CREDENTIALS_DIRECTORY);
     }
 
     public static byte[] encrypt(String key, String content) {
@@ -69,8 +63,12 @@ public class EncryptCredentials {
         return key.getBytes();
     }
 
-    public static byte[] decrypt(String key, byte[] encrypted) {
+    public static byte[] decrypt(String key, byte[] encrypted, File file) {
         try {
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+
             Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
             Cipher cipher = Cipher.getInstance("AES");
 
@@ -78,9 +76,10 @@ public class EncryptCredentials {
 
             return cipher.doFinal(encrypted);
         }
-        catch(Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
+
         return encrypted;
     }
 }

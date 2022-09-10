@@ -20,7 +20,7 @@
     <groupId>com.calendarfx</groupId>
     <artifactId>view</artifactId>
     <name>CalendarFXView</name>
-    <version>11.10.7</version>
+    <version>11.11.1</version>
 
     <dependencies>
         <dependency>
@@ -70,7 +70,7 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>18.0.1</version>
+            <version>18.0.2</version>
         </dependency>
     </dependencies>
 
@@ -129,6 +129,19 @@
                 <configuration>
                     <source>17</source>
                     <target>17</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <net.fortuna.ical4j.timezone.cache.impl>
+                            net.fortuna.ical4j.util.MapTimeZoneCache
+                        </net.fortuna.ical4j.timezone.cache.impl>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>

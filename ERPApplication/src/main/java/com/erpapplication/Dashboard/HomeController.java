@@ -11,7 +11,6 @@ import com.erpapplication.VatChecker.GRVatChecker;
 import com.itextpdf.text.DocumentException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -68,7 +67,11 @@ public class HomeController implements Initializable {
         checkVat.visibleProperty().bind(tf7.textProperty().greaterThan(""));
         comboBox.setItems(payment);
 
-        InitializeDB.newDatabaseConnection("InvoiceDB", "InvoiceDB");
+        try {
+            InitializeDB.newDatabaseConnection("InvoiceDB", "InvoiceDB");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         ObservableList<String> suggest = FXCollections.observableArrayList();
         ObservableList<String> suggest1 = FXCollections.observableArrayList();
