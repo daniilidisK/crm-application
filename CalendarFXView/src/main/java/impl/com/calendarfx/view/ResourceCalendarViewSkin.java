@@ -68,7 +68,7 @@ public class ResourceCalendarViewSkin<T> extends DayViewBaseSkin<ResourceCalenda
 
         view.dayViewMapProperty().addListener(updateGridPaneListener);
         view.showScrollBarProperty().addListener(updateGridPaneListener);
-        view.markersProperty().addListener(updateGridPaneListener);
+        view.getMarkers().addListener(updateGridPaneListener);
 
         view.showScrollBarProperty().addListener(it -> updateColumnConstraints());
 
@@ -114,7 +114,8 @@ public class ResourceCalendarViewSkin<T> extends DayViewBaseSkin<ResourceCalenda
         gridPane.add(bodyGridPane, 1, 1);
         GridPane.setFillWidth(bodyGridPane, true);
 
-        if (getSkinnable().isShowScrollBar()) {
+        ResourceCalendarView<T> resourceCalendarView = getSkinnable();
+        if (resourceCalendarView.isShowScrollBar()) {
             slider = new PlusMinusSlider();
             slider.setOrientation(Orientation.VERTICAL);
             slider.setOnValueChanged(evt -> {
@@ -122,7 +123,7 @@ public class ResourceCalendarViewSkin<T> extends DayViewBaseSkin<ResourceCalenda
                 final double base = slider.getValue();
                 final double pow = Math.signum(slider.getValue()) * Math.pow(base, 2);
                 final double pixel = pow * -100;
-                getSkinnable().setScrollTime(getSkinnable().getZonedDateTimeAt(0, pixel));
+                resourceCalendarView.setScrollTime(resourceCalendarView.getZonedDateTimeAt(0, pixel, resourceCalendarView.getZoneId()));
             });
 
             gridPane.add(slider, 2, 1);
@@ -228,7 +229,7 @@ public class ResourceCalendarViewSkin<T> extends DayViewBaseSkin<ResourceCalenda
                 }
             };
 
-            getSkinnable().markersProperty().addListener(l);
+            getSkinnable().getMarkers().addListener(l);
 
             final ObservableList<Marker> markers = getSkinnable().getMarkers();
             markers.forEach(marker -> addMarkerLine(marker));
@@ -240,7 +241,7 @@ public class ResourceCalendarViewSkin<T> extends DayViewBaseSkin<ResourceCalenda
         }
 
         private void adjustLineLocation(MarkerLine markerLine, double y) {
-            ZonedDateTime dropTime = getSkinnable().getZonedDateTimeAt(0, y);
+            ZonedDateTime dropTime = getSkinnable().getZonedDateTimeAt(0, y, getSkinnable().getZoneId());
             final VirtualGrid virtualGrid = getSkinnable().getVirtualGrid();
             if (virtualGrid != null) {
 
@@ -329,11 +330,15 @@ public class ResourceCalendarViewSkin<T> extends DayViewBaseSkin<ResourceCalenda
 
         private final Marker marker;
 
+        private final InvalidationListener updateStyleListener = (Observable it) -> updateStyleClass();
+
+        private final WeakInvalidationListener weakUpdateStyleListener = new WeakInvalidationListener(updateStyleListener);
+
         public MarkerLine(Marker marker) {
             this.marker = marker;
 
             styleProperty().bind(marker.styleProperty());
-            marker.styleClassProperty().addListener((Observable it) -> updateStyleClass());
+            marker.getStyleClass().addListener(weakUpdateStyleListener);
             updateStyleClass();
 
             Tooltip tooltip = new Tooltip();

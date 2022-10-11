@@ -20,9 +20,8 @@ import com.calendarfx.model.Calendar;
 import com.calendarfx.view.DateControl.ContextMenuParameter;
 import com.calendarfx.view.DayViewBase.EarlyLateHoursStrategy;
 import com.calendarfx.view.DayViewBase.HoursLayoutStrategy;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
+import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
@@ -47,8 +46,7 @@ import static com.calendarfx.view.VirtualGrid.OFF;
  *
  * @see DateControl#setContextMenuCallback(Callback)
  */
-public class ContextMenuProvider
-        implements Callback<ContextMenuParameter, ContextMenu> {
+public class ContextMenuProvider implements Callback<ContextMenuParameter, ContextMenu> {
 
     @Override
     public ContextMenu call(ContextMenuParameter param) {
@@ -181,7 +179,6 @@ public class ContextMenuProvider
             contextMenu.getItems().add(gridMenu);
 
             Menu hoursMenu = new Menu(Messages.getString("ContextMenuProvider.SHOW_HOURS"));
-            MenuItem hourHeight = new MenuItem();
 
             Slider slider = new Slider(40, 200, 50);
             slider.setPrefWidth(100);
@@ -191,18 +188,15 @@ public class ContextMenuProvider
                 dayView.setHourHeight(slider.getValue());
             });
 
-            Label sliderWrapper = new Label();
-            sliderWrapper.setGraphic(slider);
-            sliderWrapper.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-            hourHeight.setGraphic(sliderWrapper);
+            CustomMenuItem hourHeight = new CustomMenuItem(slider);
+            hourHeight.setHideOnClick(false);
             hoursMenu.getItems().add(hourHeight);
             hoursMenu.getItems().add(new SeparatorMenuItem());
+
             int[] hours = new int[]{4, 6, 8, 10, 12, 18, 24};
             for (int h : hours) {
                 String labelText = MessageFormat.format(Messages.getString("ContextMenuProvider.HOURS"), h);
-                Label wrapper = new Label(labelText);
-                MenuItem item = new MenuItem();
-                item.setGraphic(wrapper);
+                MenuItem item = new MenuItem(labelText);
                 item.setOnAction(evt -> {
                     dayView.setEarlyLateHoursStrategy(EarlyLateHoursStrategy.SHOW);
                     dayView.setHoursLayoutStrategy(HoursLayoutStrategy.FIXED_HOUR_COUNT);

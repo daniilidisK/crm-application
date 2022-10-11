@@ -23,7 +23,6 @@ import com.calendarfx.view.page.WeekPage;
 import com.calendarfx.view.page.YearPage;
 import com.calendarfx.view.print.PrintView;
 import impl.com.calendarfx.view.CalendarViewSkin;
-import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -32,6 +31,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -45,8 +45,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.time.YearMonth;
+import java.util.Objects;
 import java.util.Optional;
 
+import static com.calendarfx.view.CalendarView.Page.DAY;
+import static com.calendarfx.view.CalendarView.Page.MONTH;
+import static com.calendarfx.view.CalendarView.Page.WEEK;
+import static com.calendarfx.view.CalendarView.Page.YEAR;
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -70,13 +75,13 @@ public class CalendarView extends DateControl {
 
     private final YearMonthView yearMonthView;
 
-    private final DayPage dayPage;
+    private DayPage dayPage;
 
-    private final WeekPage weekPage;
+    private WeekPage weekPage;
 
-    private final MonthPage monthPage;
+    private MonthPage monthPage;
 
-    private final YearPage yearPage;
+    private YearPage yearPage;
 
     private DeveloperConsole developerConsole;
 
@@ -84,16 +89,23 @@ public class CalendarView extends DateControl {
 
     private PrintView printView;
 
+    public CalendarView() {
+        this(Page.values());
+    }
+
     /**
      * Constructs a new calendar view.
      */
-    public CalendarView() {
+    public CalendarView(Page... availablePages) {
+        Objects.requireNonNull(availablePages, "available pages can not be null");
+
+        if (availablePages.length == 0) {
+            throw new IllegalArgumentException("no available page passed to constructor");
+        }
+
         getStyleClass().add(DEFAULT_STYLE_CLASS);
 
-        this.dayPage = new DayPage();
-        this.weekPage = new WeekPage();
-        this.monthPage = new MonthPage();
-        this.yearPage = new YearPage();
+        getAvailablePages().setAll(availablePages);
 
         this.searchField = (CustomTextField) TextFields.createClearableTextField();
         this.sourceView = new SourceView();
@@ -105,7 +117,7 @@ public class CalendarView extends DateControl {
             this.developerConsole.setDateControl(this);
         }
 
-        selectedPage.set(dayPage);
+        selectedPage.set(availablePages[0]);
 
         Bindings.bindBidirectional(searchField.visibleProperty(), showSearchFieldProperty());
 
@@ -122,36 +134,12 @@ public class CalendarView extends DateControl {
         getProperties().addListener((Change<?, ?> change) -> {
             if (change.getKey().equals(SELECTED_PAGE)) {
                 if (change.getValueAdded() != null) {
-                    PageBase page = (PageBase) change.getValueAdded();
+                    Page page = (Page) change.getValueAdded();
                     selectedPage.set(page);
                     getProperties().remove(SELECTED_PAGE);
                 }
             }
         });
-
-        InvalidationListener fixSelectedPageListener = it -> fixSelectedPage();
-
-        dayPage.hiddenProperty().addListener(fixSelectedPageListener);
-        weekPage.hiddenProperty().addListener(fixSelectedPageListener);
-        monthPage.hiddenProperty().addListener(fixSelectedPageListener);
-        yearPage.hiddenProperty().addListener(fixSelectedPageListener);
-
-        fixSelectedPage();
-    }
-
-    private void fixSelectedPage() {
-        PageBase page = getSelectedPage();
-        if (page == null || page.isHidden()) {
-            if (page == dayPage) {
-                selectedPage.set(weekPage);
-            } else if (page == weekPage) {
-                selectedPage.set(monthPage);
-            } else if (page == monthPage) {
-                selectedPage.set(yearPage);
-            } else if (page == yearPage) {
-                selectedPage.set(dayPage);
-            }
-        }
     }
 
     @Override
@@ -159,9 +147,51 @@ public class CalendarView extends DateControl {
         return new CalendarViewSkin(this);
     }
 
+    public PageBase getPageView(Page page) {
+        switch (page) {
+            case DAY:
+                return getDayPage();
+            case WEEK:
+                return getWeekPage();
+            case MONTH:
+                return getMonthPage();
+            case YEAR:
+                return getYearPage();
+            default:
+                throw new IllegalArgumentException("unknown page: " + page);
+        }
+    }
+
     /**
-     * Returns the developer console that can be made visible via a META-D key
-     * stroke when the system property "calendarfx.developer" is set to true.
+     * An enumerator listing the available pages that can be shown
+     * by the calendar view. By default, the CalendarView contains
+     * all possible pages. Use {@link #getAvailablePages()} to change
+     * this.
+     *
+     * @see #getAvailablePages()
+     */
+    public enum Page {
+        DAY,
+        WEEK,
+        MONTH,
+        YEAR
+    }
+
+    private final ObservableList<Page> availablePages = FXCollections.observableArrayList();
+
+    /**
+     * Returns the list of pages that will be available within the calendar view (day, week,
+     * month, year).
+     *
+     * @return the available pages
+     */
+    public final ObservableList<Page> getAvailablePages() {
+        return availablePages;
+    }
+
+    /**
+     * Returns the developer console that can be made visible via a META-D keystroke
+     * when the system property "calendarfx.developer" is set to true.
      *
      * @return the developer console or null if the system property
      * "calendarfx.developer" is not set to true
@@ -176,6 +206,10 @@ public class CalendarView extends DateControl {
      * @return the day page
      */
     public final DayPage getDayPage() {
+        if (dayPage == null) {
+            dayPage = new DayPage();
+            bind(dayPage, true);
+        }
         return dayPage;
     }
 
@@ -185,6 +219,10 @@ public class CalendarView extends DateControl {
      * @return the week page
      */
     public final WeekPage getWeekPage() {
+        if (weekPage == null) {
+            weekPage = new WeekPage();
+            bind(weekPage, true);
+        }
         return weekPage;
     }
 
@@ -194,6 +232,10 @@ public class CalendarView extends DateControl {
      * @return the month page
      */
     public final MonthPage getMonthPage() {
+        if (monthPage == null) {
+            monthPage = new MonthPage();
+            bind(monthPage, true);
+        }
         return monthPage;
     }
 
@@ -203,6 +245,10 @@ public class CalendarView extends DateControl {
      * @return the year page
      */
     public final YearPage getYearPage() {
+        if (yearPage == null) {
+            yearPage = new YearPage();
+            bind(yearPage, true);
+        }
         return yearPage;
     }
 
@@ -346,14 +392,14 @@ public class CalendarView extends DateControl {
         return showSearchResultsTray.get();
     }
 
-    private final ReadOnlyObjectWrapper<PageBase> selectedPage = new ReadOnlyObjectWrapper<>(this, "selectedPage");
+    private final ReadOnlyObjectWrapper<Page> selectedPage = new ReadOnlyObjectWrapper<>(this, "selectedPage");
 
     /**
      * A read-only property used for storing the currently selected page.
      *
      * @return the selected page view
      */
-    public final ReadOnlyObjectProperty<PageBase> selectedPageProperty() {
+    public final ReadOnlyObjectProperty<Page> selectedPageProperty() {
         return selectedPage.getReadOnlyProperty();
     }
 
@@ -362,8 +408,18 @@ public class CalendarView extends DateControl {
      *
      * @return the selected page view
      */
-    public final PageBase getSelectedPage() {
+    public final Page getSelectedPage() {
         return selectedPageProperty().get();
+    }
+
+    /**
+     * Returns the view for the currently selected {@link Page}.
+     *
+     * @return the selected page view
+     * @see #selectedPageProperty()
+     */
+    public final PageBase getSelectedPageView() {
+        return getPageView(getSelectedPage());
     }
 
     private final ObjectProperty<Node> header = new SimpleObjectProperty<>(this, "header", null);
@@ -426,37 +482,6 @@ public class CalendarView extends DateControl {
      */
     public final void setFooter(Node node) {
         footerProperty().set(node);
-    }
-
-    private final BooleanProperty transitionsEnabled = new SimpleBooleanProperty(this, "transitionsEnabled", true);
-
-    /**
-     * A property used to control whether switching from one page to another
-     * will be done with a graphics transition.
-     *
-     * @return true if transitions (eye candy) are enabled
-     */
-    public final BooleanProperty transitionsEnabledProperty() {
-        return this.transitionsEnabled;
-    }
-
-    /**
-     * Returns the value of {@link #transitionsEnabledProperty()}.
-     *
-     * @return true if transitions are enabled
-     */
-    public final boolean isTransitionsEnabled() {
-        return transitionsEnabledProperty().get();
-    }
-
-    /**
-     * Sets the value of {@link #transitionsEnabledProperty()}.
-     *
-     * @param transitions if true transitions will be used to go from one page to
-     *                    another
-     */
-    public final void setTransitionsEnabled(boolean transitions) {
-        transitionsEnabledProperty().set(transitions);
     }
 
     // tray animation support
@@ -715,28 +740,44 @@ public class CalendarView extends DateControl {
      * Switches the view to the {@link DayPage}.
      */
     public final void showDayPage() {
-        selectedPage.set(getDayPage());
+        if (getAvailablePages().contains(DAY)) {
+            selectedPage.set(DAY);
+        } else {
+            throw new UnsupportedOperationException("calendar does not support day view");
+        }
     }
 
     /**
      * Switches the view to the {@link WeekPage}.
      */
     public final void showWeekPage() {
-        selectedPage.set(getWeekPage());
+        if (getAvailablePages().contains(WEEK)) {
+            selectedPage.set(WEEK);
+        } else {
+            throw new UnsupportedOperationException("calendar does not support week view");
+        }
     }
 
     /**
      * Switches the view to the {@link MonthPage}.
      */
     public final void showMonthPage() {
-        selectedPage.set(getMonthPage());
+        if (getAvailablePages().contains(MONTH)) {
+            selectedPage.set(MONTH);
+        } else {
+            throw new UnsupportedOperationException("calendar does not support month view");
+        }
     }
 
     /**
      * Switches the view to the {@link YearPage}.
      */
     public final void showYearPage() {
-        selectedPage.set(getYearPage());
+        if (getAvailablePages().contains(YEAR)) {
+            selectedPage.set(YEAR);
+        } else {
+            throw new UnsupportedOperationException("calendar does not support year view");
+        }
     }
 
     /**
@@ -748,14 +789,14 @@ public class CalendarView extends DateControl {
      */
     public final void showDate(LocalDate date) {
         requireNonNull(date);
-        if (!dayPage.isHidden()) {
-            selectedPage.set(getDayPage());
-        } else if (!weekPage.isHidden()) {
-            selectedPage.set(getWeekPage());
-        } else if (!monthPage.isHidden()) {
-            selectedPage.set(getMonthPage());
-        } else if (!yearPage.isHidden()) {
-            selectedPage.set(getYearPage());
+        if (getAvailablePages().contains(DAY)) {
+            selectedPage.set(DAY);
+        } else if (getAvailablePages().contains(WEEK)) {
+            selectedPage.set(WEEK);
+        } else if (getAvailablePages().contains(MONTH)) {
+            selectedPage.set(MONTH);
+        } else if (getAvailablePages().contains(YEAR)) {
+            selectedPage.set(YEAR);
         }
 
         setDate(date);
@@ -774,12 +815,12 @@ public class CalendarView extends DateControl {
         if (weekOfYear < 1) {
             throw new IllegalArgumentException("illegal value for week of year: " + weekOfYear);
         }
-        if (!weekPage.isHidden()) {
-            selectedPage.set(getWeekPage());
-        } else if (!monthPage.isHidden()) {
-            selectedPage.set(getMonthPage());
-        } else if (!yearPage.isHidden()) {
-            selectedPage.set(getYearPage());
+        if (getAvailablePages().contains(WEEK)) {
+            selectedPage.set(WEEK);
+        } else if (getAvailablePages().contains(MONTH)) {
+            selectedPage.set(MONTH);
+        } else if (getAvailablePages().contains(YEAR)) {
+            selectedPage.set(YEAR);
         }
 
         setDate(LocalDate.of(year.getValue(), 1, 1).plusWeeks(weekOfYear));
@@ -796,14 +837,14 @@ public class CalendarView extends DateControl {
     public final void showDateTime(LocalDateTime dateTime) {
         requireNonNull(dateTime);
 
-        if (!dayPage.isHidden()) {
-            selectedPage.set(getDayPage());
-        } else if (!weekPage.isHidden()) {
-            selectedPage.set(getWeekPage());
-        } else if (!monthPage.isHidden()) {
-            selectedPage.set(getMonthPage());
-        } else if (!yearPage.isHidden()) {
-            selectedPage.set(getYearPage());
+        if (getAvailablePages().contains(DAY)) {
+            selectedPage.set(DAY);
+        } else if (getAvailablePages().contains(WEEK)) {
+            selectedPage.set(WEEK);
+        } else if (getAvailablePages().contains(MONTH)) {
+            selectedPage.set(MONTH);
+        } else if (getAvailablePages().contains(YEAR)) {
+            selectedPage.set(YEAR);
         }
 
         setDate(dateTime.toLocalDate());
@@ -820,10 +861,10 @@ public class CalendarView extends DateControl {
     public final void showYearMonth(YearMonth yearMonth) {
         requireNonNull(yearMonth);
 
-        if (!monthPage.isHidden()) {
-            selectedPage.set(getMonthPage());
-        } else if (!yearPage.isHidden()) {
-            selectedPage.set(getYearPage());
+        if (getAvailablePages().contains(MONTH)) {
+            selectedPage.set(MONTH);
+        } else if (getAvailablePages().contains(YEAR)) {
+            selectedPage.set(YEAR);
         }
 
         setDate(yearMonth.atDay(1));
@@ -838,8 +879,8 @@ public class CalendarView extends DateControl {
      */
     public final void showYear(Year year) {
         requireNonNull(year);
-        if (!yearPage.isHidden()) {
-            selectedPage.set(getYearPage());
+        if (getAvailablePages().contains(YEAR)) {
+            selectedPage.set(YEAR);
             setDate(year.atDay(1));
         }
     }
@@ -918,44 +959,6 @@ public class CalendarView extends DateControl {
             @Override
             public String getDescription() {
                 return "Show or hide the search results tray on the right";
-            }
-
-            @Override
-            public String getCategory() {
-                return CALENDAR_VIEW_CATEGORY;
-            }
-        });
-
-        items.add(new Item() {
-
-            @Override
-            public Optional<ObservableValue<?>> getObservableValue() {
-                return Optional.of(transitionsEnabledProperty());
-            }
-
-            @Override
-            public void setValue(Object value) {
-                setTransitionsEnabled((boolean) value);
-            }
-
-            @Override
-            public Object getValue() {
-                return isTransitionsEnabled();
-            }
-
-            @Override
-            public Class<?> getType() {
-                return Boolean.class;
-            }
-
-            @Override
-            public String getName() {
-                return "Transitions";
-            }
-
-            @Override
-            public String getDescription() {
-                return "Use transitions when changing pages.";
             }
 
             @Override

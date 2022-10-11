@@ -16,21 +16,17 @@
 
 package impl.com.calendarfx.view;
 
+import com.calendarfx.util.LoggingDomain;
 import com.calendarfx.util.ViewHelper;
-import com.calendarfx.view.DayEntryView;
 import com.calendarfx.view.DayViewBase;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.event.EventTarget;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollBar;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.TransferMode;
@@ -51,7 +47,7 @@ public class DayViewScrollPane extends Pane {
     private LocalTime cachedStartTime;
 
     /**
-     * Constructs a new scrollpane for the given content node.
+     * Constructs a new scrollpane for the given day view.
      *
      * @param dayView the content node
      * @param scrollBar the scrollbar used for vertical scrolling
@@ -65,37 +61,35 @@ public class DayViewScrollPane extends Pane {
 
         scrollBar.setOrientation(Orientation.VERTICAL);
         scrollBar.maxProperty().bind(dayView.heightProperty().subtract(heightProperty()));
-        scrollBar.visibleAmountProperty()
-                .bind(Bindings.multiply(scrollBar.maxProperty(),
-                        Bindings.divide(heightProperty(), dayView.heightProperty())));
+        scrollBar.visibleAmountProperty().bind(Bindings.multiply(scrollBar.maxProperty(), Bindings.divide(heightProperty(), dayView.heightProperty())));
         scrollBar.valueProperty().addListener(it -> dayView.setTranslateY(scrollBar.getValue() * -1));
 
         // user clicks on scrollbar arrows -> scroll one hour
         scrollBar.unitIncrementProperty().bind(dayView.hourHeightProperty());
 
-        // user clicks in backround of scrollbar = block scroll -> scroll half a page
+        // user clicks in background of scrollbar = block scroll -> scroll half a page
         scrollBar.blockIncrementProperty().bind(heightProperty().divide(2));
 
         dayView.translateYProperty().addListener(it -> {
-            updateVisibleTimeRange();
+            updateVisibleTimeRange("translate-y changed");
             cachedStartTime = getStartTime();
             scrollBar.setValue(-dayView.getTranslateY());
         });
 
         getChildren().add(dayView);
 
-        heightProperty().addListener(it -> updateVisibleTimeRange());
+        heightProperty().addListener(it -> updateVisibleTimeRange("height of scrollpane changed"));
 
-        dayView.sceneProperty().addListener(it -> updateVisibleTimeRange());
-        dayView.heightProperty().addListener(it -> updateVisibleTimeRange());
-        dayView.visibleHoursProperty().addListener(it -> updateVisibleTimeRange());
+        dayView.sceneProperty().addListener(it -> updateVisibleTimeRange("scene changed"));
+        dayView.heightProperty().addListener(it -> updateVisibleTimeRange("height of day view changed"));
+        dayView.visibleHoursProperty().addListener(it -> updateVisibleTimeRange("visible hours changed"));
 
         dayView.earlyLateHoursStrategyProperty().addListener(it -> requestLayout());
         dayView.hourHeightCompressedProperty().addListener(it -> requestLayout());
         dayView.hoursLayoutStrategyProperty().addListener(it -> requestLayout());
         dayView.hourHeightProperty().addListener(it -> requestLayout());
 
-        updateVisibleTimeRange();
+        updateVisibleTimeRange("initial call");
 
         addEventFilter(ScrollEvent.SCROLL, evt -> {
             scrollY(evt.getDeltaY());
@@ -128,11 +122,16 @@ public class DayViewScrollPane extends Pane {
         double y = ViewHelper.getTimeLocation(dayView, time, true);
         Insets insets = getInsets();
 
-        // place the given time at one third of the visible height
-        dayView.setTranslateY(Math.min(0, Math.max(-y + getHeight() / 3, getMaxTranslateY(insets))));
+        // only scroll if the given time is not in the visible range
+        if (y < Math.abs(dayView.getTranslateY()) || y > Math.abs(dayView.getTranslateY()) + getHeight()) {
+            // place the given time at one third of the visible height
+            dayView.setTranslateY(Math.min(0, Math.max(-y + getHeight() / 3, getMaxTranslateY(insets))));
+        }
     }
 
-    private void updateVisibleTimeRange() {
+    private void updateVisibleTimeRange(String reason) {
+        LoggingDomain.VIEW.fine("reason for updating visible time range: " + reason);
+
         if (dayView.getScene() == null || dayView.getHeight() == 0) {
             return;
         }
@@ -193,13 +192,12 @@ public class DayViewScrollPane extends Pane {
 
         Insets insets = getInsets();
 
-
         final double ph = dayView.prefHeight(-1);
         dayView.resizeRelocate(
-                snapPosition(insets.getLeft()),
-                snapPosition(insets.getTop()),
-                snapSize(getWidth() - insets.getLeft() - insets.getRight()),
-                snapSize(Math.max(ph, getHeight() - insets.getTop() - insets.getBottom())));
+                snapPositionX(insets.getLeft()),
+                snapPositionY(insets.getTop()),
+                snapSizeX(getWidth() - insets.getLeft() - insets.getRight()),
+                snapSizeY(Math.max(ph, getHeight() - insets.getTop() - insets.getBottom())));
 
         switch (dayView.getHoursLayoutStrategy()) {
             case FIXED_HOUR_COUNT:
@@ -218,34 +216,6 @@ public class DayViewScrollPane extends Pane {
 
     private double getMaxTranslateY(Insets insets) {
         return (getHeight() - insets.getTop() - insets.getBottom()) - dayView.getHeight();
-    }
-
-    private void startDrag(MouseEvent evt) {
-        EventTarget target = evt.getTarget();
-        if (!isOnEntry(target)) {
-            return;
-        }
-        Dragboard db = startDragAndDrop(TransferMode.MOVE);
-        ClipboardContent content = new ClipboardContent();
-
-        /*
-         * We have to add some content, otherwise drag over will not be called.
-         */
-        content.putString("dummy");
-        db.setContent(content);
-    }
-
-    private boolean isOnEntry(EventTarget target) {
-        if (target == null || !(target instanceof Node)) {
-            return false;
-        }
-
-        Node node = (Node) target;
-        if (node instanceof DayEntryView) {
-            return true;
-        }
-
-        return isOnEntry(node.getParent());
     }
 
     private void autoscrollIfNeeded(DragEvent evt) {
@@ -314,7 +284,7 @@ public class DayViewScrollPane extends Pane {
         private double yOffset;
 
         public ScrollThread() {
-            super("Autoscrolling List View");
+            super("Autoscrolling ScrollPane");
             setDaemon(true);
         }
 

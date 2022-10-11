@@ -13,14 +13,13 @@
   ~  See the License for the specific language governing permissions and
   ~  limitations under the License.
   -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.calendarfx</groupId>
     <artifactId>view</artifactId>
     <name>CalendarFXView</name>
-    <version>11.11.1</version>
+    <version>11.12.1</version>
 
     <dependencies>
         <dependency>
@@ -36,8 +35,9 @@
         <dependency>
             <groupId>org.mnode.ical4j</groupId>
             <artifactId>ical4j</artifactId>
-            <version>4.0.0-alpha2</version>
+            <version>4.0.0-beta2</version>
         </dependency>
+
 
         <dependency>
             <groupId>org.controlsfx</groupId>
@@ -70,7 +70,7 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>18.0.2</version>
+            <version>19</version>
         </dependency>
     </dependencies>
 

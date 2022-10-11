@@ -31,10 +31,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Skin;
+import javafx.scene.layout.Region;
 import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Optional;
@@ -75,6 +77,7 @@ public class WeekView extends DayViewBase {
 
         setWeekDayViewFactory(param -> new WeekDayView());
         setNumberOfDays(numberOfDays);
+        setShowToday(true);
 
         dateProperty().addListener(it -> updateStartAndEndDates());
 
@@ -87,13 +90,13 @@ public class WeekView extends DayViewBase {
     }
 
     @Override
-    public ZonedDateTime getZonedDateTimeAt(double x, double y) {
+    public ZonedDateTime getZonedDateTimeAt(double x, double y, ZoneId zoneId) {
         final WeekDayView view = getWeekDayViewAt(x);
         if (view != null) {
-            return ZonedDateTime.of(ViewHelper.getLocationTime(view, y, false, true), getZoneId());
+            return ZonedDateTime.ofInstant(ViewHelper.getInstantAt(view, y), getZoneId());
         }
 
-        return super.getZonedDateTimeAt(x, y);
+        return super.getZonedDateTimeAt(x, y, zoneId);
     }
 
     private WeekDayView getWeekDayViewAt(double x) {
@@ -306,6 +309,30 @@ public class WeekView extends DayViewBase {
      */
     public final LocalDate getEndDate() {
         return endDate.get();
+    }
+
+    private final ObjectProperty<Callback<WeekView, Region>> separatorFactory = new SimpleObjectProperty<>(this, "separatorFactory", it-> {
+        Region region = new Region();
+        region.getStyleClass().add("weekday-separator");
+        return region;
+    });
+
+
+    public final Callback<WeekView, Region> getSeparatorFactory() {
+        return separatorFactory.get();
+    }
+
+    /**
+     * A factory used for creating (optional) vertical separators between the week days.
+     *
+     * @return the separator factory
+     */
+    public final ObjectProperty<Callback<WeekView, Region>> separatorFactoryProperty() {
+        return separatorFactory;
+    }
+
+    public final void setSeparatorFactory(Callback<WeekView, Region> separatorFactory) {
+        this.separatorFactory.set(separatorFactory);
     }
 
     private static final String WEEK_VIEW_CATEGORY = "Week View";

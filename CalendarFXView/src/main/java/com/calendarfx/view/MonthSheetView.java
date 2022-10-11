@@ -138,15 +138,10 @@ public class MonthSheetView extends DateControl {
         ContextMenu contextMenu = new ContextMenu();
         MenuItem newEntry = new MenuItem(Messages.getString("MonthSheetView.ADD_NEW_EVENT"));
         newEntry.setOnAction(evt -> {
-
             LocalDate date = getDateSelectionModel().getLastSelected();
-            Entry<?> entry = createEntryAt(ZonedDateTime.of(date, LocalTime.of(12, 0), getZoneId()));
-
-            Callback<EntryDetailsParameter, Boolean> callback = getEntryDetailsCallback();
-            EntryDetailsParameter param = new EntryDetailsParameter(null, this, entry, dateCell, ctxMenuScreenX, ctxMenuScreenY);
-            callback.call(param);
-
+            createEntryAt(ZonedDateTime.of(date, LocalTime.of(12, 0), getZoneId()));
         });
+
         contextMenu.getItems().add(newEntry);
 
         contextMenu.getItems().add(new SeparatorMenuItem());
@@ -843,11 +838,11 @@ public class MonthSheetView extends DateControl {
             this.yearMonth = yearMonth;
         }
 
-        public final MonthSheetView getView() {
+        public MonthSheetView getView() {
             return view;
         }
 
-        public final YearMonth getYearMonth() {
+        public YearMonth getYearMonth() {
             return yearMonth;
         }
     }
@@ -1740,9 +1735,9 @@ public class MonthSheetView extends DateControl {
             double ps2 = dayOfWeekLabel.prefWidth(-1);
             double ps3 = weekNumberLabel.prefWidth(-1);
 
-            dayOfMonthLabel.resizeRelocate(snapPosition(left), snapPosition(top), snapSize(ps1), snapSize(availableHeight));
-            dayOfWeekLabel.resizeRelocate(snapPosition(left + ps1), snapPosition(top), snapSize(ps2), snapSize(availableHeight));
-            weekNumberLabel.resizeRelocate(snapPosition(w - right - ps3), snapPosition(top), snapSize(ps3), snapSize(availableHeight));
+            dayOfMonthLabel.resizeRelocate(snapPositionX(left), snapPositionY(top), snapSizeX(ps1), snapSizeY(availableHeight));
+            dayOfWeekLabel.resizeRelocate(snapPositionX(left + ps1), snapPositionY(top), snapSizeX(ps2), snapSizeY(availableHeight));
+            weekNumberLabel.resizeRelocate(snapPositionX(w - right - ps3), snapPositionY(top), snapSizeX(ps3), snapSizeY(availableHeight));
         }
 
         @Override
