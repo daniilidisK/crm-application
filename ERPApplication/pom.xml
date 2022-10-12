@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.calendarfx</groupId>
             <artifactId>view</artifactId>
-            <version>11.12.1</version>
+            <version>11.12.3</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

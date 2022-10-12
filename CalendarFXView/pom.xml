@@ -19,7 +19,7 @@
     <groupId>com.calendarfx</groupId>
     <artifactId>view</artifactId>
     <name>CalendarFXView</name>
-    <version>11.12.1</version>
+    <version>11.12.3</version>
 
     <dependencies>
         <dependency>

@@ -112,7 +112,7 @@ public class CalendarEvent extends Event {
 
     private final Calendar calendar;
 
-    public static boolean oldFullDay;
+    private boolean oldFullDay;
 
     private String oldText;
 
